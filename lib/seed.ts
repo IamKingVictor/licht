@@ -1,16 +1,9 @@
 import type { Category, Product, Review, SiteSettings, PersonaliseField } from './types'
 
-const IMG = {
-  hero: '/images/hero-gift-boxes.jpg',
-  signature: '/images/signature-box.jpg',
-  wedding: '/images/wedding-souvenirs.jpg',
-  boxesWide: '/images/products/gift-boxes-wide.jpg',
-  boxesTissue: '/images/products/gift-boxes-tissue.jpg',
-  sigOpen: '/images/products/signature-open.jpg',
-  sigDetail: '/images/products/signature-detail.jpg',
-  wedCluster: '/images/products/wedding-cluster.jpg',
-  wedCard: '/images/products/wedding-card.jpg',
-}
+/** Bump this when the sample catalogue changes so demo-mode browsers pick up the new products. */
+export const SEED_VERSION = '2'
+
+const IMG = (slug: string) => `/images/products/${slug}.jpg`
 
 export const seedSettings: SiteSettings = {
   store_name: 'LICHT SIGNATURE SOUVENIRS',
@@ -37,131 +30,94 @@ export const seedSettings: SiteSettings = {
 }
 
 export const seedCategories: Category[] = [
-  { id: 'cat-wedding', slug: 'wedding-souvenirs', name: 'Wedding Souvenirs', description: 'Beautiful keepsakes designed to make your wedding celebration unforgettable.', image_url: IMG.wedding, sort_order: 1, is_active: true },
-  { id: 'cat-birthday', slug: 'birthday-gifts', name: 'Birthday Gifts', description: 'Thoughtful gifts for birthdays and milestone celebrations.', image_url: IMG.boxesWide, sort_order: 2, is_active: true },
-  { id: 'cat-corporate', slug: 'corporate-gifts', name: 'Corporate Gifts', description: 'Elegant and professional gifts for clients, employees and business partners.', image_url: IMG.sigOpen, sort_order: 3, is_active: true },
-  { id: 'cat-personalised', slug: 'personalised-gifts', name: 'Personalised Gifts', description: 'Make your gift truly special with names, dates, messages and customised designs.', image_url: IMG.signature, sort_order: 4, is_active: true },
-  { id: 'cat-boxes', slug: 'gift-boxes', name: 'Gift Boxes', description: 'Beautifully curated gift boxes designed for every occasion.', image_url: IMG.hero, sort_order: 5, is_active: true },
+  { id: 'cat-wedding', slug: 'wedding-souvenirs', name: 'Wedding Souvenirs', description: 'Beautiful keepsakes designed to make your wedding celebration unforgettable.', image_url: IMG('decorative-mirror'), sort_order: 1, is_active: true },
+  { id: 'cat-birthday', slug: 'birthday-gifts', name: 'Birthday Gifts', description: 'Thoughtful gifts for birthdays and milestone celebrations.', image_url: IMG('luxe-velvet-vanity-chair'), sort_order: 2, is_active: true },
+  { id: 'cat-corporate', slug: 'corporate-gifts', name: 'Corporate Gifts', description: 'Elegant and professional gifts for clients, employees and business partners.', image_url: IMG('portable-uv-phone-sanitizer'), sort_order: 3, is_active: true },
+  { id: 'cat-personalised', slug: 'personalised-gifts', name: 'Personalised Gifts', description: 'Make your gift truly special with names, dates, messages and customised designs.', image_url: IMG('customizable-smart-light-bulbs'), sort_order: 4, is_active: true },
+  { id: 'cat-boxes', slug: 'gift-boxes', name: 'Gift Boxes', description: 'Beautifully curated gift boxes designed for every occasion.', image_url: IMG('pura-4-smart-fragrance-diffuser'), sort_order: 5, is_active: true },
 ]
 
-const nameField: PersonaliseField = { key: 'name', label: 'Name or initials', type: 'text', required: true, maxLength: 30, placeholder: 'e.g. Amara & Tunde' }
-const dateField: PersonaliseField = { key: 'date', label: 'Date', type: 'date' }
-const msgField: PersonaliseField = { key: 'message', label: 'Special message', type: 'textarea', maxLength: 120, placeholder: 'A short message for the card (optional)' }
-const logoField: PersonaliseField = { key: 'logo_note', label: 'Logo / branding details', type: 'textarea', maxLength: 200, placeholder: 'Describe your logo or send it to us after ordering' }
+const giftMessage: PersonaliseField = { key: 'message', label: 'Gift message', type: 'textarea', maxLength: 120, placeholder: 'A short message for the gift card (optional)' }
 
 let n = 0
-function p(x: Partial<Product> & Pick<Product, 'slug' | 'name' | 'short_description' | 'price' | 'category_slug' | 'images'>): Product {
+function p(x: Partial<Product> & Pick<Product, 'slug' | 'name' | 'short_description' | 'description' | 'price' | 'category_slug'>): Product {
   n += 1
   return {
-    id: `prod-${x.slug}`,
-    description: '',
     price_is_from: false,
+    images: [IMG(x.slug)],
     occasions: [],
     is_personalisable: false,
     personalisation_fields: [],
     min_quantity: 1,
     stock: null,
-    lead_time_days: 5,
+    lead_time_days: 3,
     is_bestseller: false,
     is_featured: false,
     is_active: true,
     sort_order: n,
     created_at: new Date(Date.UTC(2026, 8, 1, 9, n)).toISOString(),
+    id: `prod-${x.slug}`,
     ...x,
   }
 }
 
 export const seedProducts: Product[] = [
-  p({
-    slug: 'the-signature-box', name: 'The Signature Box', price: 58, category_slug: 'gift-boxes',
-    short_description: 'A refined edit of beautiful little luxuries.',
-    description: 'Our house gift box: a rigid black presentation box lined with ivory tissue and filled with a premium selection of carefully chosen keepsakes, finished with a satin ribbon and a gold-foiled card. Ready to give the moment it arrives.',
-    images: [IMG.signature, IMG.sigOpen, IMG.sigDetail], occasions: ['birthdays', 'anniversaries', 'weddings'],
-    is_personalisable: true, personalisation_fields: [nameField, msgField], is_bestseller: true, is_featured: true, lead_time_days: 4,
-  }),
-  p({
-    slug: 'wedding-favour-set', name: 'Wedding Favour Set', price: 4.5, price_is_from: true, category_slug: 'wedding-souvenirs',
-    short_description: 'Elegant keepsakes for your guests to treasure.',
-    description: 'Ivory favour boxes tied with a champagne ribbon and a gold wax seal, finished with a name or "with love" card. Price shown is per favour for orders of 20+; personalised tags and bespoke ribbon colours available.',
-    images: [IMG.wedding, IMG.wedCluster, IMG.wedCard], occasions: ['weddings', 'anniversaries'], min_quantity: 20,
-    is_personalisable: true, personalisation_fields: [{ ...nameField, label: 'Couple names', placeholder: 'e.g. Amara & Tunde' }, dateField, msgField],
-    is_bestseller: true, is_featured: true, lead_time_days: 14,
-  }),
-  p({
-    slug: 'the-celebration-box', name: 'The Celebration Box', price: 48, category_slug: 'birthday-gifts',
-    short_description: 'A beautiful way to mark their special day.',
-    description: 'A champagne-ivory gift box with a satin bow, filled with a curated set of treats and keepsakes for birthdays and milestone moments. Add a name and message to make it theirs.',
-    images: [IMG.hero, IMG.boxesWide, IMG.boxesTissue], occasions: ['birthdays', 'graduations'],
-    is_personalisable: true, personalisation_fields: [nameField, msgField], is_bestseller: true, is_featured: true,
-  }),
-  p({
-    slug: 'the-wedding-box', name: 'The Wedding Box', price: 72, category_slug: 'gift-boxes',
-    short_description: 'Elegant gifts for couples, bridesmaids and groomsmen.',
-    description: 'A luxury keepsake box for the people who matter most on your wedding day. Choose names and a date, and we will present it with gold detailing and a handwritten-style card.',
-    images: [IMG.boxesWide, IMG.wedCard, IMG.hero], occasions: ['weddings'],
-    is_personalisable: true, personalisation_fields: [nameField, dateField, msgField], is_bestseller: true, lead_time_days: 7,
-  }),
-  p({
-    slug: 'the-corporate-box', name: 'The Corporate Box', price: 65, category_slug: 'corporate-gifts',
-    short_description: 'Premium gifting for clients and business partners.',
-    description: 'A polished presentation box designed to make a lasting impression. Add your logo and a personal note. Volume pricing is available — request a quote for 20+ boxes.',
-    images: [IMG.sigOpen, IMG.signature, IMG.sigDetail], occasions: ['corporate'],
-    is_personalisable: true, personalisation_fields: [{ ...nameField, label: 'Recipient or company name', required: false }, logoField, msgField], is_bestseller: true, lead_time_days: 10,
-  }),
-  p({
-    slug: 'the-luxury-box', name: 'The Luxury Box', price: 120, category_slug: 'gift-boxes',
-    short_description: 'Our premium gifting experience.',
-    description: 'The very best of LICHT SIGNATURE: an oversized rigid box, layered tissue, hand-tied ribbon and our most indulgent selection of keepsakes. For the gift that is remembered.',
-    images: [IMG.sigOpen, IMG.hero, IMG.signature], occasions: ['weddings', 'anniversaries', 'corporate'],
-    is_personalisable: true, personalisation_fields: [nameField, msgField], is_bestseller: true, is_featured: true, lead_time_days: 7,
-  }),
-  p({
-    slug: 'personalised-luxury-gift-box', name: 'Personalised Luxury Gift Box', price: 62, price_is_from: true, category_slug: 'personalised-gifts',
-    short_description: 'Elegant gift box customised with a name or special message.',
-    description: 'Start with our luxury box and make it entirely yours: names, initials, dates, a message and a gold-foil monogram. Every detail is approved with you before we begin.',
-    images: [IMG.signature, IMG.sigDetail, IMG.sigOpen], occasions: ['birthdays', 'anniversaries', 'weddings', 'baby-showers'],
-    is_personalisable: true, personalisation_fields: [nameField, dateField, msgField], is_bestseller: true, is_featured: true, lead_time_days: 6,
-  }),
-  p({
-    slug: 'guest-favour-gift-box', name: 'Guest Favour Gift Box', price: 6.9, category_slug: 'wedding-souvenirs',
-    short_description: 'Individually boxed guest gifts with a name tag.',
-    description: 'Small, beautifully presented gift boxes with a personalised tag for each guest — perfect for place settings. Minimum order of 20.',
-    images: [IMG.wedCluster, IMG.wedding, IMG.wedCard], occasions: ['weddings', 'christenings'], min_quantity: 20,
-    is_personalisable: true, personalisation_fields: [{ ...nameField, label: 'Tag wording', placeholder: 'e.g. Thank you for celebrating with us' }, dateField],
-    is_bestseller: true, lead_time_days: 14,
-  }),
-  p({
-    slug: 'birthday-keepsake-box', name: 'Birthday Keepsake Box', price: 42, category_slug: 'birthday-gifts',
-    short_description: 'A keepsake box for children, teens and adults.',
-    description: 'A gift box with room for little treasures — add a name, age and message and we will dress it for the occasion.',
-    images: [IMG.boxesTissue, IMG.hero, IMG.boxesWide], occasions: ['birthdays'],
-    is_personalisable: true, personalisation_fields: [nameField, { key: 'age', label: 'Age / milestone', type: 'text', maxLength: 10 }, msgField],
-  }),
-  p({
-    slug: 'anniversary-memory-set', name: 'Anniversary Memory Set', price: 54, category_slug: 'personalised-gifts',
-    short_description: 'A beautiful keepsake for couples and loved ones.',
-    description: 'A gold-foiled keepsake presented in an ivory box, personalised with names and the date you celebrate.',
-    images: [IMG.wedCard, IMG.wedCluster, IMG.signature], occasions: ['anniversaries'],
-    is_personalisable: true, personalisation_fields: [{ ...nameField, label: 'Names' }, dateField, msgField],
-  }),
-  p({
-    slug: 'christening-keepsake-set', name: 'Christening Keepsake Set', price: 36, category_slug: 'personalised-gifts',
-    short_description: 'Elegant keepsakes for a meaningful occasion.',
-    description: 'A soft ivory keepsake set to commemorate a christening or dedication — personalised with the child’s name and date.',
-    images: [IMG.wedding, IMG.wedCard, IMG.boxesTissue], occasions: ['christenings', 'baby-showers'],
-    is_personalisable: true, personalisation_fields: [{ ...nameField, label: "Child's name" }, dateField, msgField],
-  }),
-  p({
-    slug: 'staff-appreciation-gift', name: 'Staff Appreciation Gift', price: 28, category_slug: 'corporate-gifts',
-    short_description: 'A considered thank-you for your team.',
-    description: 'A neat presentation box with a premium selection and a personalised thank-you card. Minimum order of 10; ask us about branding.',
-    images: [IMG.sigDetail, IMG.sigOpen, IMG.signature], occasions: ['corporate'], min_quantity: 10,
-    is_personalisable: true, personalisation_fields: [{ ...nameField, label: 'Company name' }, logoField, msgField], lead_time_days: 10,
-  }),
+  p({ slug: 'decorative-mirror', name: 'Decorative Mirror', price: 129, category_slug: 'wedding-souvenirs',
+    short_description: 'Ornate gold-framed oval wall mirror.',
+    description: 'An oval wall mirror in an ornate, sculpted gold frame — a statement piece for a hallway, bathroom or bedroom and a gift that lasts long after the celebration.',
+    occasions: ['weddings', 'anniversaries'], is_bestseller: true, is_featured: true, lead_time_days: 5 }),
+  p({ slug: 'marble-shelf', name: 'Marble Shelf', price: 49, category_slug: 'wedding-souvenirs',
+    short_description: 'Marble-topped wall shelf with gold brackets.',
+    description: 'A wall shelf with a pale marble top and slim gold brackets. Ideal for plants, candles and keepsakes.',
+    occasions: ['weddings', 'anniversaries'] }),
+  p({ slug: 'luxe-velvet-vanity-chair', name: 'Luxe Velvet Vanity Chair', price: 79, category_slug: 'birthday-gifts',
+    short_description: 'Blush velvet chair with gold legs.',
+    description: 'A petal-backed vanity chair in soft blush velvet, set on slim gold-finish legs. A beautiful finishing touch for a dressing table or bedroom.',
+    occasions: ['birthdays', 'graduations'], is_bestseller: true, is_featured: true, lead_time_days: 5 }),
+  p({ slug: 'led-vanity-mirror', name: 'LED Vanity Mirror', price: 159, category_slug: 'birthday-gifts',
+    short_description: 'Round backlit mirror with built-in magnifier.',
+    description: 'A round wall mirror with a glowing crescent LED light and a built-in magnifying circle — a luxury bathroom or dressing-room upgrade.',
+    occasions: ['birthdays', 'anniversaries'], is_bestseller: true, is_featured: true, lead_time_days: 5 }),
+  p({ slug: 'advanced-robot-vacuum-cleaner', name: 'Advanced Robot Vacuum Cleaner', price: 249, category_slug: 'corporate-gifts',
+    short_description: 'Robot vacuum with self-emptying dock.',
+    description: 'A robot vacuum cleaner with a self-emptying base station for effortless, hands-free floor cleaning. A standout gift for executives and valued clients.',
+    occasions: ['corporate'], is_bestseller: true, is_featured: true }),
+  p({ slug: 'automatic-paper-towel-dispenser', name: 'Automatic Paper Towel Dispenser', price: 54.99, category_slug: 'corporate-gifts',
+    short_description: 'Touch-free wall-mounted towel dispenser.',
+    description: 'A wall-mounted automatic paper towel dispenser (285 × 390 mm) for clean, touch-free hand drying in offices, restaurants and washrooms.',
+    occasions: ['corporate'] }),
+  p({ slug: 'wireless-soap-dispenser', name: 'Wireless Soap Dispenser', price: 24.99, category_slug: 'corporate-gifts',
+    short_description: 'Touch-free foaming soap dispenser.',
+    description: 'A sleek, wireless automatic soap dispenser that keeps hands clean without touching a pump — suited to the home, the office and healthcare spaces.',
+    occasions: ['corporate'] }),
+  p({ slug: 'portable-uv-phone-sanitizer', name: 'Portable UV Phone Sanitizer', price: 59, category_slug: 'corporate-gifts',
+    short_description: 'Sanitises and charges your phone.',
+    description: 'A compact UV sanitising case that cleans your phone while it charges, with a lifetime bulb warranty. A practical, premium gift for clients and staff.',
+    occasions: ['corporate', 'graduations'], is_bestseller: true }),
+  p({ slug: 'customizable-smart-light-bulbs', name: 'Customizable Smart Light Bulbs', price: 14.99, price_is_from: true, category_slug: 'personalised-gifts',
+    short_description: 'App-controlled colour-changing smart bulbs.',
+    description: 'Colour-changing smart bulbs you control from your phone, compatible with Amazon Alexa and Google Assistant. Add a gift message and we will include a card.',
+    occasions: ['birthdays', 'anniversaries'], is_personalisable: true, personalisation_fields: [giftMessage], is_bestseller: true }),
+  p({ slug: 'foldable-towel-warmer', name: 'Foldable Towel Warmer', price: 44.99, category_slug: 'personalised-gifts',
+    short_description: 'Fold-away warmer for cosy, spa-warm towels.',
+    description: 'A foldable towel warmer that stores flat when not in use — wrap your towels in warmth after a bath or shower. Add a gift message for a thoughtful finish.',
+    occasions: ['birthdays', 'baby-showers'], is_personalisable: true, personalisation_fields: [giftMessage] }),
+  p({ slug: 'towel-warmer-with-3d-fireplace', name: 'Towel Warmer with 3D Fireplace', price: 89, category_slug: 'personalised-gifts',
+    short_description: 'Towel warmer bucket with realistic flame effect.',
+    description: 'A large towel warmer bucket with a 3D flame display, digital LED display, flip-top lid, fragrance disc holder, child safety lock and removable legs. Add a gift message to make it personal.',
+    occasions: ['birthdays', 'anniversaries'], is_personalisable: true, personalisation_fields: [giftMessage], is_bestseller: true, is_featured: true, lead_time_days: 5 }),
+  p({ slug: 'pura-4-smart-fragrance-diffuser', name: 'Pura 4 Smart Fragrance Diffuser', price: 69, category_slug: 'gift-boxes',
+    short_description: 'Wi-Fi smart diffuser for effortless home fragrance.',
+    description: 'A smart fragrance diffuser you control from an app and with voice assistants, filling your space with a signature scent.',
+    occasions: ['birthdays', 'anniversaries', 'weddings'], is_bestseller: true, is_featured: true }),
+  p({ slug: 'automatic-bagging-trash-can', name: 'Automatic Bagging Trash Can', price: 39.99, category_slug: 'gift-boxes',
+    short_description: 'Smart sensor bin that lays its own bag (7L / 9L).',
+    description: 'A slim smart trash can with a motion-sensor lid and automatic bag laying, in 7L and 9L sizes. Quiet, tidy and ideal for bathrooms and small spaces.',
+    occasions: ['birthdays'] }),
 ]
 
 export const seedReviews: Review[] = [
-  { id: 'rev-1', product_slug: null, name: 'Wedding client', rating: 5, title: null, label: 'Wedding client', body: 'The souvenirs were absolutely beautiful and our guests loved them. Everything was packaged perfectly.', approved: true, created_at: '2026-09-02T10:00:00Z' },
-  { id: 'rev-2', product_slug: 'personalised-luxury-gift-box', name: 'Customer', rating: 5, title: null, label: 'Customer', body: 'The personalised gift box was even more beautiful than I expected.', approved: true, created_at: '2026-09-12T10:00:00Z' },
-  { id: 'rev-3', product_slug: null, name: 'Corporate client', rating: 5, title: null, label: 'Corporate client', body: 'Our clients were genuinely impressed. The branding and presentation were flawless, and delivery was right on schedule.', approved: true, created_at: '2026-09-20T10:00:00Z' },
+  { id: 'rev-1', product_slug: null, name: 'Wedding client', rating: 5, title: null, label: 'Wedding client', body: 'The gifts were absolutely beautiful and our guests loved them. Everything was packaged perfectly.', approved: true, created_at: '2026-09-02T10:00:00Z' },
+  { id: 'rev-2', product_slug: null, name: 'Customer', rating: 5, title: null, label: 'Customer', body: 'It was even more beautiful than I expected.', approved: true, created_at: '2026-09-12T10:00:00Z' },
+  { id: 'rev-3', product_slug: null, name: 'Corporate client', rating: 5, title: null, label: 'Corporate client', body: 'Our clients were genuinely impressed. The presentation was flawless, and delivery was right on schedule.', approved: true, created_at: '2026-09-20T10:00:00Z' },
 ]

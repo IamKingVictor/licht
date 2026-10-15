@@ -13,7 +13,7 @@ export default function AdminSubscribers() {
       <Panel>
         {loading || error || !rows.length ? <Loading loading={loading} error={error} empty="No subscribers yet." onRetry={reload} /> : (
           <table className="w-full"><thead><tr className="border-b border-line"><th className={th}>Email</th><th className={th}>Subscribed</th><th className={th} /></tr></thead>
-            <tbody className="divide-y divide-line">{rows.map((r) => (<tr key={r.id}><td className={td}>{r.email}</td><td className={td}>{formatDateTime(r.created_at)}</td><td className={`${td} text-right`}><button aria-label={`Remove ${r.email}`} onClick={() => confirm(`Remove ${r.email}?`) && remove(r.id)} className="text-faint hover:text-[#a3412e]"><Trash2 size={15} /></button></td></tr>))}</tbody></table>
+            <tbody className="divide-y divide-line">{rows.map((r) => (<tr key={r.id}><td className={td}>{r.email}</td><td className={td}>{formatDateTime(r.created_at)}</td><td className={`${td} text-right`}><button aria-label={`Remove ${r.email}`} onClick={() => confirm(`Remove ${r.email}?`) && remove(r.id)} className="text-faint"><Trash2 size={15} /></button></td></tr>))}</tbody></table>
         )}
       </Panel>
     </div>

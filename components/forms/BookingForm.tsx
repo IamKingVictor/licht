@@ -55,7 +55,7 @@ export default function BookingForm() {
         <legend className="lbl">What would you like to book?</legend>
         <div className="grid gap-3 sm:grid-cols-3">
           {BOOKING_TYPES.map((b) => (
-            <label key={b.value} className={`cursor-pointer border p-4 transition-colors ${type === b.value ? 'border-gold bg-white' : 'border-line bg-white/40 hover:border-gold-soft'}`}>
+            <label key={b.value} className={`cursor-pointer border p-4 ${type === b.value ? 'border-gold bg-white' : 'border-line bg-white/40'}`}>
               <input type="radio" name="booking_type" value={b.value} checked={type === b.value} onChange={() => setType(b.value)} className="sr-only" />
               <span className="block font-serif text-xl">{b.label}</span>
               <span className="mt-1 block text-xs leading-5 text-muted">{b.text}</span>

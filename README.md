@@ -54,3 +54,7 @@ Every data call goes through `lib/db.ts` and returns `{ ok, data } | { ok: false
 - Currency defaults to £ (Admin → Site settings). The `Price` filter labels in `ShopView.tsx` use £.
 - Set `NEXT_PUBLIC_SITE_URL` for correct SEO/sitemap, and `NEXT_PUBLIC_GA_ID` for Google Analytics.
 - The service worker only registers in production builds (`npm run build && npm start`).
+
+## Logo & product images
+- **Logo:** put your logo at `public/logo.png` (transparent PNG, roughly 600 px wide works well). The header uses it automatically and falls back to the text wordmark if the file is missing.
+- **Product images:** the sample catalogue uses the photos in `public/images/products/`. Change names, prices, categories and photos any time in Admin → Products.

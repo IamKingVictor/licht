@@ -61,9 +61,9 @@ function AuthForms() {
         <button disabled={busy} className="btn-dark w-full">{busy ? <Spinner /> : mode === 'in' ? 'Sign in' : mode === 'up' ? 'Create account' : 'Send reset link'}</button>
       </form>
       <div className="mt-6 flex flex-wrap justify-between gap-3 text-[11px] uppercase tracking-[0.14em] text-muted">
-        {mode !== 'in' && <button onClick={() => { setMode('in'); setError(''); setInfo('') }} className="hover:text-gold">Sign in</button>}
-        {mode !== 'up' && <button onClick={() => { setMode('up'); setError(''); setInfo('') }} className="hover:text-gold">Create an account</button>}
-        {mode === 'in' && <button onClick={() => { setMode('reset'); setError(''); setInfo('') }} className="hover:text-gold">Forgot password?</button>}
+        {mode !== 'in' && <button onClick={() => { setMode('in'); setError(''); setInfo('') }}>Sign in</button>}
+        {mode !== 'up' && <button onClick={() => { setMode('up'); setError(''); setInfo('') }}>Create an account</button>}
+        {mode === 'in' && <button onClick={() => { setMode('reset'); setError(''); setInfo('') }}>Forgot password?</button>}
       </div>
       {!HAS_SUPABASE && (
         <div className="mt-10 border border-line bg-sand p-4 text-xs leading-5 text-muted">

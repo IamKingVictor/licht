@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   formatDetection: { telephone: false },
   openGraph: {
     type: 'website', siteName: SITE.name, title: SITE.name, description: SITE.description,
-    images: [{ url: '/images/hero-gift-boxes.jpg', width: 768, height: 1376, alt: 'Elegant champagne gift boxes' }],
+    images: [{ url: '/images/products/led-vanity-mirror.jpg', width: 516, height: 594, alt: 'Backlit LED vanity mirror' }],
   },
   twitter: { card: 'summary_large_image', title: SITE.name, description: SITE.description },
 }

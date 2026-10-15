@@ -9,7 +9,7 @@ import { HAS_SUPABASE } from './config'
 import { getSupabase } from './supabase'
 import { blobToDataUrl, resizeImage } from './image'
 import { computeTotals, round } from './pricing'
-import { seedCategories, seedProducts, seedReviews, seedSettings } from './seed'
+import { SEED_VERSION, seedCategories, seedProducts, seedReviews, seedSettings } from './seed'
 import type {
   Booking, BookingInput, Category, Message, MessageInput, Order, OrderInput, OrderItem, Product, Quote,
   QuoteInput, Res, Review, ReviewInput, SiteSettings, Subscriber,
@@ -40,8 +40,22 @@ async function guard<T>(fn: () => Promise<Res<T>>): Promise<Res<T>> {
 const LS = (t: string) => `licht:db:${t}`
 const hasWindow = () => typeof window !== 'undefined'
 
+let seedChecked = false
+/** If the sample catalogue changed, drop the old demo catalogue (orders and enquiries are kept). */
+function ensureSeedVersion() {
+  if (seedChecked || !hasWindow()) return
+  seedChecked = true
+  try {
+    if (localStorage.getItem('licht:db:seedv') !== SEED_VERSION) {
+      ;['products', 'categories', 'reviews'].forEach((t) => localStorage.removeItem(LS(t)))
+      localStorage.setItem('licht:db:seedv', SEED_VERSION)
+    }
+  } catch { /* storage unavailable */ }
+}
+
 function lread<T>(table: string, seed: () => T[] = () => []): T[] {
   if (!hasWindow()) return seed()
+  ensureSeedVersion()
   try {
     const raw = localStorage.getItem(LS(table))
     if (raw) return JSON.parse(raw) as T[]

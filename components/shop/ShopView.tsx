@@ -73,7 +73,7 @@ export default function ShopView({ fixedCategory, hideFilters = false }: { fixed
           <div className="-mx-5 flex gap-2 overflow-x-auto px-5 pb-1 sm:mx-0 sm:flex-wrap sm:px-0" role="tablist" aria-label="Categories">
             {[{ slug: '', name: 'All' }, ...categories].map((c) => {
               const on = category === c.slug
-              return <button key={c.slug} role="tab" aria-selected={on} onClick={() => set({ category: c.slug })} className={`shrink-0 border px-4 py-2.5 text-[10px] uppercase tracking-[0.16em] transition-colors ${on ? 'border-ink bg-ink text-white' : 'border-line hover:border-gold hover:text-gold'}`}>{c.name}</button>
+              return <button key={c.slug} role="tab" aria-selected={on} onClick={() => set({ category: c.slug })} className={`shrink-0 border px-4 py-2.5 text-[10px] uppercase tracking-[0.16em] ${on ? 'border-ink bg-ink text-white' : 'border-line'}`}>{c.name}</button>
             })}
           </div>
           <div className="flex flex-wrap items-center gap-3">
@@ -102,11 +102,11 @@ export default function ShopView({ fixedCategory, hideFilters = false }: { fixed
       {error && !products.length ? (
         <EmptyState title="We couldn’t load the collection" text={error} action={<button onClick={reload} className="btn-dark">Try again</button>} />
       ) : !ready ? (
-        <div className="grid grid-cols-2 gap-x-4 gap-y-9 lg:grid-cols-4 lg:gap-x-5">{Array.from({ length: 8 }).map((_, i) => <Skeleton key={i} className="aspect-[0.9]" />)}</div>
+        <div className="grid grid-cols-2 gap-x-3 gap-y-6 sm:gap-x-4 sm:gap-y-8 lg:grid-cols-4">{Array.from({ length: 8 }).map((_, i) => <Skeleton key={i} className="aspect-square" />)}</div>
       ) : list.length === 0 ? (
         <EmptyState title="Nothing matches yet" text="Try removing a filter or searching for something else — or tell us what you are looking for and we will create it." action={<div className="flex flex-wrap justify-center gap-3"><button onClick={reset} className="btn-line">Clear filters</button><Link href="/quote?type=custom" className="btn-dark">Request a custom order</Link></div>} />
       ) : (
-        <div className="grid grid-cols-2 gap-x-4 gap-y-9 lg:grid-cols-4 lg:gap-x-5">{list.map((p, i) => <ProductCard key={p.slug} product={p} priority={i < 4} />)}</div>
+        <div className="grid grid-cols-2 gap-x-3 gap-y-6 sm:gap-x-4 sm:gap-y-8 lg:grid-cols-4">{list.map((p, i) => <ProductCard key={p.slug} product={p} priority={i < 4} />)}</div>
       )}
     </div>
   )

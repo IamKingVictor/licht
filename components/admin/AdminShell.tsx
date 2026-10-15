@@ -43,7 +43,7 @@ export default function AdminShell({ children }: { children: ReactNode }) {
       </ul>
       <div className="space-y-1 border-t border-[#3a3029] p-3">
         <Link href="/" target="_blank" className="flex items-center gap-3 px-3 py-3 text-[11px] uppercase tracking-[0.16em] text-[#c3b9ae] hover:text-cream"><ExternalLink size={16} /> View site</Link>
-        <button onClick={async () => { await signOut(); router.replace('/admin/login') }} className="flex w-full items-center gap-3 px-3 py-3 text-[11px] uppercase tracking-[0.16em] text-[#c3b9ae] hover:text-cream"><LogOut size={16} /> Sign out</button>
+        <button onClick={async () => { await signOut(); router.replace('/admin/login') }} className="flex w-full items-center gap-3 px-3 py-3 text-[11px] uppercase tracking-[0.16em] text-[#c3b9ae]"><LogOut size={16} /> Sign out</button>
         <p className="truncate px-3 pt-2 text-[10px] text-[#8d8378]">{user.email}</p>
       </div>
     </nav>

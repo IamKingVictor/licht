@@ -28,14 +28,6 @@ export const PERSONALISE_OPTIONS = ['Names', 'Dates', 'Initials', 'Messages', 'L
 export const CORPORATE_FOR = ['Companies', 'Organisations', 'Conferences', 'Seminars', 'Staff appreciation', 'Client gifts', 'Business partners', 'Corporate celebrations', 'Promotional events', 'Corporate orders']
 export const BULK_HELP = ['Product selection', 'Personalisation', 'Branding', 'Packaging', 'Bulk orders', 'Event souvenirs', 'Corporate gifts', 'Custom gift boxes']
 
-export const BOXES = [
-  { slug: 'the-signature-box', name: 'The Signature Box', text: 'A premium selection of carefully chosen gifts.' },
-  { slug: 'the-celebration-box', name: 'The Celebration Box', text: 'Perfect for birthdays and special occasions.' },
-  { slug: 'the-wedding-box', name: 'The Wedding Box', text: 'Elegant gifts for couples, bridesmaids, groomsmen or wedding guests.' },
-  { slug: 'the-corporate-box', name: 'The Corporate Box', text: 'Premium gifting for clients and business partners.' },
-  { slug: 'the-luxury-box', name: 'The Luxury Box', text: 'Our premium gifting experience.' },
-]
-
 export const FAQS = [
   { q: 'Do you offer personalised souvenirs?', a: 'Yes. Selected products can be personalised with names, dates, messages, logos and event details.' },
   { q: 'Do you accept bulk orders?', a: 'Yes. We welcome bulk orders for weddings, corporate events, parties and other occasions.' },

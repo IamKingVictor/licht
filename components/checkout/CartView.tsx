@@ -43,7 +43,7 @@ export default function CartView() {
       <div>
         <div className="mb-2 flex items-center justify-between border-b border-line pb-4">
           <p className="text-xs text-muted">{itemCount} item{itemCount === 1 ? '' : 's'}</p>
-          <button onClick={() => { if (confirm('Remove everything from your basket?')) clear() }} className="text-[10px] uppercase tracking-[0.16em] text-muted hover:text-gold">Clear basket</button>
+          <button onClick={() => { if (confirm('Remove everything from your basket?')) clear() }} className="text-[10px] uppercase tracking-[0.16em] text-muted">Clear basket</button>
         </div>
         <ul className="divide-y divide-line">
           {rows.map(({ line, product }) => {
@@ -68,14 +68,14 @@ export default function CartView() {
                   {line.quantity < product.min_quantity && <p className="err-text">Minimum order is {product.min_quantity}.</p>}
                   <div className="mt-4 flex items-center gap-5 sm:hidden">
                     <Qty value={line.quantity} onChange={(n) => setQty(line.key, Math.min(max, Math.max(product.min_quantity, n)))} step={step} />
-                    <button onClick={() => remove(line.key)} aria-label={`Remove ${product.name}`} className="text-faint hover:text-gold"><Trash2 size={16} /></button>
+                    <button onClick={() => remove(line.key)} aria-label={`Remove ${product.name}`} className="text-faint"><Trash2 size={16} /></button>
                   </div>
                 </div>
                 <div className="hidden flex-col items-end justify-between sm:flex">
                   <p className="font-serif text-xl">{money(product.price * line.quantity)}</p>
                   <div className="flex items-center gap-5">
                     <Qty value={line.quantity} onChange={(n) => setQty(line.key, Math.min(max, Math.max(product.min_quantity, n)))} step={step} />
-                    <button onClick={() => remove(line.key)} aria-label={`Remove ${product.name}`} className="text-faint hover:text-gold"><Trash2 size={16} /></button>
+                    <button onClick={() => remove(line.key)} aria-label={`Remove ${product.name}`} className="text-faint"><Trash2 size={16} /></button>
                   </div>
                 </div>
               </li>

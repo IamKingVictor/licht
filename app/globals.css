@@ -67,12 +67,12 @@ input:focus-visible, select:focus-visible, textarea:focus-visible { outline: non
   .h2 em, .h1 em { @apply font-light; }
   .lead { @apply text-[15px] leading-7 text-muted; }
 
-  .btn-dark { @apply btn bg-gold text-white hover:bg-ink; }
-  .btn-shop { @apply btn bg-gold text-white; }
-  .btn-gold { @apply btn bg-gold text-white hover:bg-ink; }
-  .btn-line { @apply btn border border-ink text-ink hover:bg-ink hover:text-white; }
+  .btn-dark { @apply btn bg-ink text-white; }
+  .btn-gold { @apply btn bg-gold text-white; }
+  .btn-line { @apply btn border border-ink text-ink; }
   .btn-sm { @apply px-4 py-3; }
   .link-line { @apply inline-flex items-center gap-2 border-b border-gold pb-2 text-[10px] uppercase tracking-[0.18em] transition-colors hover:text-gold; }
+  button.link-line:hover { color: inherit; }
 
   .lbl { @apply mb-2 block text-[10px] uppercase tracking-[0.16em] text-muted; }
   .field { @apply w-full rounded-none border border-line bg-white/60 px-4 py-3 text-sm text-ink outline-none transition-colors placeholder:text-faint focus:border-gold focus:bg-white disabled:opacity-60; }

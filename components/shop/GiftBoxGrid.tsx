@@ -1,27 +1,14 @@
 'use client'
-import Link from 'next/link'
-import { ArrowRight } from 'lucide-react'
-import { BOXES } from '@/lib/content'
 import { useStore } from '@/lib/store'
-import { money } from '@/lib/format'
-import { ProductImage } from './ProductCard'
+import ProductCard from './ProductCard'
+import { EmptyState, Skeleton } from '@/components/ui/bits'
+import Link from 'next/link'
 
+/** Shows whatever is in the "Gift Boxes" category, so the page always follows the admin catalogue. */
 export default function GiftBoxGrid() {
-  const { bySlug } = useStore()
-  return (
-    <div className="grid gap-x-5 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
-      {BOXES.map((b) => {
-        const p = bySlug(b.slug)
-        return (
-          <Link key={b.slug} href={`/shop/${b.slug}`} className="group">
-            <div className="relative aspect-[0.9] overflow-hidden bg-sand"><ProductImage src={p?.images[0]} alt={b.name} sizes="(max-width: 640px) 100vw, 33vw" className="transition-transform duration-700 group-hover:scale-105" /></div>
-            <div className="flex items-start justify-between gap-3 border-b border-line pt-4 pb-4">
-              <div><h2 className="font-serif text-2xl">{b.name}</h2><p className="mt-1 text-xs leading-5 text-muted">{b.text}</p></div>
-              <div className="text-right">{p && <p className="text-xs font-medium text-gold">{money(p.price)}</p>}<ArrowRight size={16} className="ml-auto mt-2 text-gold" /></div>
-            </div>
-          </Link>
-        )
-      })}
-    </div>
-  )
+  const { products, ready } = useStore()
+  const list = products.filter((p) => p.category_slug === 'gift-boxes')
+  if (!ready) return <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">{[0, 1, 2, 3].map((i) => <Skeleton key={i} className="aspect-square" />)}</div>
+  if (!list.length) return <EmptyState title="Gift boxes are coming soon" text="Tell us what you have in mind and we will create it." action={<Link href="/quote?type=custom-box" className="btn-dark">Request a custom box</Link>} />
+  return <div className="grid grid-cols-2 gap-x-3 gap-y-6 sm:gap-x-4 sm:gap-y-8 lg:grid-cols-4">{list.map((p) => <ProductCard key={p.slug} product={p} />)}</div>
 }

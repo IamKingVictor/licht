@@ -258,7 +258,7 @@ export default function Header() {
                 <Heart size={14} /> Wishlist
               </Link>
             </div>
-            <Link href="/shop" className="btn-shop mt-3">
+            <Link href="/shop" className="btn-dark mt-3">
               Shop now <ArrowRight size={15} />
             </Link>
           </nav>

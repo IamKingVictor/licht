@@ -5,7 +5,7 @@
 const VERSION = 'licht-v1'
 const STATIC = `${VERSION}-static`
 const PAGES = `${VERSION}-pages`
-const PRECACHE = ['/offline', '/icons/icon-192.png', '/icons/icon-512.png', '/images/hero-gift-boxes.jpg']
+const PRECACHE = ['/offline', '/icons/icon-192.png', '/icons/icon-512.png', '/images/products/led-vanity-mirror.jpg']
 
 self.addEventListener('install', (event) => {
   event.waitUntil(caches.open(STATIC).then((c) => c.addAll(PRECACHE)).then(() => self.skipWaiting()))

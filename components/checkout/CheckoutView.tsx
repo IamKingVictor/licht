@@ -106,7 +106,7 @@ export default function CheckoutView() {
           <h2 className="mb-5 font-serif text-3xl">Delivery</h2>
           <div className="grid gap-3 sm:grid-cols-2" role="radiogroup" aria-label="Delivery method">
             {([['delivery', 'Delivery', settings.delivery_note ? 'To your home or event venue' : 'To your door', <Truck key="t" size={18} />], ['collection', 'Collection', 'Free — collect from us by appointment', <Store key="s" size={18} />]] as const).map(([v, label, text, icon]) => (
-              <label key={v} className={`flex cursor-pointer items-start gap-3 border p-4 ${method === v ? 'border-gold bg-white' : 'border-line bg-white/40 hover:border-gold-soft'}`}>
+              <label key={v} className={`flex cursor-pointer items-start gap-3 border p-4 ${method === v ? 'border-gold bg-white' : 'border-line bg-white/40'}`}>
                 <input type="radio" name="delivery_method" value={v} checked={method === v} onChange={() => setMethod(v)} className="mt-1 accent-[#9a7644]" />
                 <span className="text-gold">{icon}</span>
                 <span><span className="block text-sm font-medium">{label}</span><span className="block text-xs text-muted">{text}</span></span>
@@ -134,7 +134,7 @@ export default function CheckoutView() {
           <h2 className="mb-5 font-serif text-3xl">Payment</h2>
           <div className="space-y-3" role="radiogroup" aria-label="Payment method">
             {payOptions.filter((o) => !o.hidden).map((o) => (
-              <label key={o.value} className={`flex cursor-pointer items-start gap-3 border p-4 ${payment === o.value ? 'border-gold bg-white' : 'border-line bg-white/40 hover:border-gold-soft'}`}>
+              <label key={o.value} className={`flex cursor-pointer items-start gap-3 border p-4 ${payment === o.value ? 'border-gold bg-white' : 'border-line bg-white/40'}`}>
                 <input type="radio" name="payment" value={o.value} checked={payment === o.value} onChange={() => setPayment(o.value)} className="mt-1 accent-[#9a7644]" />
                 <span className="text-gold">{o.icon}</span>
                 <span><span className="block text-sm font-medium">{o.label}</span><span className="block text-xs leading-5 text-muted">{o.text}</span></span>
