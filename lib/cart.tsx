@@ -1,8 +1,10 @@
 'use client'
-import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react'
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import { personalisationKey } from './pricing'
 import type { CartLine, Product } from './types'
 import { useToast } from './toast'
+import { useAuth } from './auth'
+import { api } from './db'
 
 interface CartCtx {
   lines: CartLine[]
@@ -23,11 +25,27 @@ export function useCart() {
 
 const KEY = 'licht:cart'
 
+/** Saved lines win, plus anything added as a guest before signing in. Same line in both: keep the larger quantity. */
+function mergeLines(remote: CartLine[], local: CartLine[]): CartLine[] {
+  const out = new Map(remote.map((l) => [l.key, l]))
+  for (const l of local) {
+    const r = out.get(l.key)
+    out.set(l.key, r ? { ...r, quantity: Math.max(r.quantity, l.quantity) } : l)
+  }
+  return [...out.values()]
+}
+
 export function CartProvider({ children }: { children: ReactNode }) {
   const [lines, setLines] = useState<CartLine[]>([])
   const [hydrated, setHydrated] = useState(false)
   const toast = useToast()
+  const { user, loading: authLoading } = useAuth()
+  const userId = user?.id ?? null
+  const syncedFor = useRef<string | null>(null) // user whose saved cart has been merged in; saving is blocked until then
+  const linesRef = useRef<CartLine[]>([])
+  linesRef.current = lines
 
+  // The browser copy is the guest cart and an instant-load cache. Signed-in customers also have it saved in the database.
   useEffect(() => {
     try {
       const raw = localStorage.getItem(KEY)
@@ -42,6 +60,30 @@ export function CartProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (hydrated) localStorage.setItem(KEY, JSON.stringify(lines))
   }, [lines, hydrated])
+
+  // Signing in: merge the saved cart with the guest cart. Signing out: clear the cart so it does not linger on a shared device.
+  useEffect(() => {
+    if (!hydrated || authLoading) return
+    if (!userId) {
+      if (syncedFor.current) { syncedFor.current = null; setLines([]) }
+      return
+    }
+    if (syncedFor.current === userId) return
+    let cancelled = false
+    api.cart.load().then((r) => {
+      if (cancelled || !r.ok) return // on failure keep the local cart and do not overwrite the saved one
+      syncedFor.current = userId
+      setLines(mergeLines(r.data, linesRef.current))
+    })
+    return () => { cancelled = true }
+  }, [hydrated, authLoading, userId])
+
+  // Save to the database shortly after each change.
+  useEffect(() => {
+    if (!hydrated || !userId || syncedFor.current !== userId) return
+    const t = setTimeout(() => { void api.cart.save(lines) }, 700)
+    return () => clearTimeout(t)
+  }, [lines, hydrated, userId])
 
   const add = useCallback<CartCtx['add']>((product, quantity, personalisation = {}) => {
     const clean = Object.fromEntries(Object.entries(personalisation).filter(([, v]) => v.trim() !== ''))

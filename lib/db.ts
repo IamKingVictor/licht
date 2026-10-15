@@ -11,7 +11,7 @@ import { blobToDataUrl, resizeImage } from './image'
 import { computeTotals, round } from './pricing'
 import { SEED_VERSION, seedCategories, seedProducts, seedReviews, seedSettings } from './seed'
 import type {
-  Booking, BookingInput, Category, Message, MessageInput, Order, OrderInput, OrderItem, Product, Quote,
+  Booking, BookingInput, CartLine, Category, Message, MessageInput, Order, OrderInput, OrderItem, Product, Quote,
   QuoteInput, Res, Review, ReviewInput, SiteSettings, Subscriber,
 } from './types'
 
@@ -242,8 +242,70 @@ async function myOrders(email?: string): Promise<Res<Order[]>> {
     const uidNow = currentLocalUserId()
     return ok(lread<Order>('orders').filter((o) => (uidNow && o.user_id === uidNow) || (email && o.email === email.toLowerCase())))
   }
-  const { data, error } = await sb.from('orders').select('*, order_items(*)').order('created_at', { ascending: false })
+  const me = await sessionUserId()
+  if (!me) return ok([])
+  const { data, error } = await sb.from('orders').select('*, order_items(*)').eq('user_id', me).order('created_at', { ascending: false })
   return error ? fail(errMsg(error)) : ok((data ?? []) as Order[])
+}
+
+async function sessionUserId(): Promise<string | null> {
+  const sb = getSupabase()
+  if (!sb) return null
+  const { data } = await sb.auth.getSession()
+  return data.session?.user.id ?? null
+}
+
+/* ───────────────────────── saved cart + wishlist (signed-in customers) ───────────────────────── */
+
+// Saves run one at a time so two quick edits can never interleave their delete/insert steps.
+let saveChain: Promise<unknown> = Promise.resolve()
+const queued = <T,>(fn: () => Promise<T>): Promise<T> => {
+  const run = saveChain.then(fn, fn)
+  saveChain = run.catch(() => undefined)
+  return run
+}
+
+async function cartLoad(): Promise<Res<CartLine[]>> {
+  const sb = getSupabase()
+  const me = await sessionUserId()
+  if (!sb || !me) return ok([])
+  const { data, error } = await sb.from('cart_items').select('line_key, product_slug, quantity, personalisation').eq('user_id', me).order('updated_at')
+  if (error) return fail(errMsg(error))
+  return ok((data ?? []).map((r) => ({ key: r.line_key, slug: r.product_slug, quantity: r.quantity, personalisation: (r.personalisation ?? {}) as Record<string, string> })))
+}
+
+function cartSave(lines: CartLine[]): Promise<Res<true>> {
+  return queued(async () => {
+    const sb = getSupabase()
+    const me = await sessionUserId()
+    if (!sb || !me) return ok(true as const)
+    const del = await sb.from('cart_items').delete().eq('user_id', me)
+    if (del.error) return fail(errMsg(del.error))
+    if (!lines.length) return ok(true as const)
+    const { error } = await sb.from('cart_items').insert(lines.map((l) => ({ user_id: me, line_key: l.key, product_slug: l.slug, quantity: l.quantity, personalisation: l.personalisation })))
+    return error ? fail(errMsg(error)) : ok(true as const)
+  })
+}
+
+async function wishlistLoad(): Promise<Res<string[]>> {
+  const sb = getSupabase()
+  const me = await sessionUserId()
+  if (!sb || !me) return ok([])
+  const { data, error } = await sb.from('wishlist_items').select('product_slug').eq('user_id', me).order('created_at')
+  return error ? fail(errMsg(error)) : ok((data ?? []).map((r) => r.product_slug as string))
+}
+
+function wishlistSave(slugs: string[]): Promise<Res<true>> {
+  return queued(async () => {
+    const sb = getSupabase()
+    const me = await sessionUserId()
+    if (!sb || !me) return ok(true as const)
+    const del = await sb.from('wishlist_items').delete().eq('user_id', me)
+    if (del.error) return fail(errMsg(del.error))
+    if (!slugs.length) return ok(true as const)
+    const { error } = await sb.from('wishlist_items').insert(slugs.map((s) => ({ user_id: me, product_slug: s })))
+    return error ? fail(errMsg(error)) : ok(true as const)
+  })
 }
 
 function currentLocalUserId(): string | null {
@@ -459,6 +521,8 @@ export const api = {
   placeOrder: (i: OrderInput) => guard(() => placeOrder(i)),
   trackOrder: (n: string, e: string) => guard(() => trackOrder(n, e)),
   myOrders: (email?: string) => guard(() => myOrders(email)),
+  cart: { load: () => guard(cartLoad), save: (l: CartLine[]) => guard(() => cartSave(l)) },
+  wishlist: { load: () => guard(wishlistLoad), save: (s: string[]) => guard(() => wishlistSave(s)) },
   submitQuote,
   submitBooking,
   submitMessage,
