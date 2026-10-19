@@ -3,13 +3,14 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useState, t
 import { api, flushOutbox } from './db'
 import { HAS_SUPABASE } from './config'
 import { setCurrency } from './format'
-import { seedCategories, seedProducts, seedSettings } from './seed'
-import type { Category, Product, SiteSettings } from './types'
+import { seedCategories, seedProducts, seedSettings, seedSlides } from './seed'
+import type { Category, HeroSlide, Product, SiteSettings } from './types'
 
 interface StoreCtx {
   categories: Category[]
   products: Product[]
   settings: SiteSettings
+  slides: HeroSlide[]
   ready: boolean
   error: string | null
   reload: () => Promise<void>
@@ -30,14 +31,16 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   const [categories, setCategories] = useState<Category[]>(HAS_SUPABASE ? [] : seedCategories)
   const [products, setProducts] = useState<Product[]>(HAS_SUPABASE ? [] : seedProducts)
   const [settings, setSettings] = useState<SiteSettings>(seedSettings)
+  const [slides, setSlides] = useState<HeroSlide[]>(HAS_SUPABASE ? [] : seedSlides)
   const [ready, setReady] = useState(!HAS_SUPABASE)
   const [error, setError] = useState<string | null>(null)
 
-  const apply = useCallback((d: { categories: Category[]; products: Product[]; settings: SiteSettings }) => {
+  const apply = useCallback((d: { categories: Category[]; products: Product[]; settings: SiteSettings; slides?: HeroSlide[] }) => {
     setCurrency(d.settings.currency)
     setCategories(d.categories)
     setProducts(d.products)
     setSettings(d.settings)
+    setSlides(d.slides ?? [])
   }, [])
 
   const reload = useCallback(async () => {
@@ -67,6 +70,6 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   }, [apply, reload])
 
   const bySlug = useCallback((slug: string) => products.find((p) => p.slug === slug), [products])
-  const value = useMemo(() => ({ categories, products, settings, ready, error, reload, bySlug }), [categories, products, settings, ready, error, reload, bySlug])
+  const value = useMemo(() => ({ categories, products, settings, slides, ready, error, reload, bySlug }), [categories, products, settings, slides, ready, error, reload, bySlug])
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>
 }

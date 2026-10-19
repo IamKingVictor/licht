@@ -19,6 +19,22 @@ export interface Category {
   is_active: boolean
 }
 
+export interface HeroSlide {
+  id: string
+  eyebrow: string
+  title: string
+  title_em: string
+  body: string
+  image_url: string | null
+  cta_label: string
+  cta_href: string
+  cta2_label: string
+  cta2_href: string
+  sort_order: number
+  is_active: boolean
+  created_at?: string
+}
+
 export interface Product {
   id: string
   slug: string

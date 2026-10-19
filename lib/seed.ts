@@ -1,4 +1,4 @@
-import type { Category, Product, Review, SiteSettings, PersonaliseField } from './types'
+import type { Category, HeroSlide, Product, Review, SiteSettings, PersonaliseField } from './types'
 
 /** Bump this when the sample catalogue changes so demo-mode browsers pick up the new products. */
 export const SEED_VERSION = '2'
@@ -28,6 +28,14 @@ export const seedSettings: SiteSettings = {
   card_payment_note: "We'll email you a secure card payment link shortly after your order is received.",
   bulk_threshold: 20,
 }
+
+/** Demo-mode slides, and the fallback shown when no slides have been created yet. */
+export const seedSlides: HeroSlide[] = [
+  { id: 'slide-1', eyebrow: 'Premium gifting, thoughtfully made', title: 'Memorable moments.', title_em: 'Beautifully preserved.', body: "From elegant event souvenirs to personalised gifts, we help you celebrate life's special moments with gifts worth remembering.", image_url: IMG('led-vanity-mirror'), cta_label: 'Shop now', cta_href: '/shop', cta2_label: 'Explore collection', cta2_href: '#collections', sort_order: 1, is_active: true },
+  { id: 'slide-2', eyebrow: 'Personalised gifts', title: 'Gifts that carry', title_em: 'their name.', body: 'Add a name, a date or a heartfelt message. We make each piece unmistakably theirs.', image_url: IMG('customizable-smart-light-bulbs'), cta_label: 'Personalise a gift', cta_href: '/personalised-gifts', cta2_label: 'Browse all gifts', cta2_href: '/shop', sort_order: 2, is_active: true },
+  { id: 'slide-3', eyebrow: 'Corporate gifting', title: 'Make every client', title_em: 'feel remembered.', body: 'Elegant gifts for clients, teams and partners, with bulk pricing and branded presentation.', image_url: IMG('portable-uv-phone-sanitizer'), cta_label: 'Corporate gifts', cta_href: '/corporate-gifts', cta2_label: 'Request a quote', cta2_href: '/quote', sort_order: 3, is_active: true },
+  { id: 'slide-4', eyebrow: 'Souvenirs & keepsakes', title: 'Bring a piece of', title_em: 'the moment home.', body: 'Curated souvenirs and gift boxes, beautifully packed and ready to give.', image_url: IMG('signature-open'), cta_label: 'Browse souvenirs', cta_href: '/shop', cta2_label: 'Plan an event', cta2_href: '/events', sort_order: 4, is_active: true },
+]
 
 export const seedCategories: Category[] = [
   { id: 'cat-wedding', slug: 'wedding-souvenirs', name: 'Wedding Souvenirs', description: 'Beautiful keepsakes designed to make your wedding celebration unforgettable.', image_url: IMG('decorative-mirror'), sort_order: 1, is_active: true },

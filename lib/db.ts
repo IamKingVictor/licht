@@ -9,13 +9,13 @@ import { HAS_SUPABASE } from './config'
 import { getSupabase } from './supabase'
 import { blobToDataUrl, resizeImage } from './image'
 import { computeTotals, round } from './pricing'
-import { SEED_VERSION, seedCategories, seedProducts, seedReviews, seedSettings } from './seed'
+import { SEED_VERSION, seedCategories, seedProducts, seedReviews, seedSettings, seedSlides } from './seed'
 import type {
-  Booking, BookingInput, CartLine, Category, Message, MessageInput, Order, OrderInput, OrderItem, Product, Quote,
+  Booking, BookingInput, CartLine, Category, HeroSlide, Message, MessageInput, Order, OrderInput, OrderItem, Product, Quote,
   QuoteInput, Res, Review, ReviewInput, SiteSettings, Subscriber,
 } from './types'
 
-export type AdminTable = 'products' | 'categories' | 'orders' | 'quotes' | 'bookings' | 'messages' | 'reviews' | 'subscribers'
+export type AdminTable = 'products' | 'categories' | 'hero_slides' | 'orders' | 'quotes' | 'bookings' | 'messages' | 'reviews' | 'subscribers'
 
 const ok = <T,>(data: T): Res<T> => ({ ok: true, data })
 const fail = <T = never,>(error: string): Res<T> => ({ ok: false, error })
@@ -132,19 +132,21 @@ export async function flushOutbox(): Promise<number> {
 
 /* ───────────────────────── storefront ───────────────────────── */
 
-async function loadStorefront(): Promise<Res<{ categories: Category[]; products: Product[]; settings: SiteSettings }>> {
+async function loadStorefront(): Promise<Res<{ categories: Category[]; products: Product[]; settings: SiteSettings; slides: HeroSlide[] }>> {
   const sb = getSupabase()
   if (!sb) {
     return ok({
       categories: lread<Category>('categories', () => seedCategories).filter((c) => c.is_active).sort((a, b) => a.sort_order - b.sort_order),
       products: lread<Product>('products', () => seedProducts).filter((p) => p.is_active).sort((a, b) => a.sort_order - b.sort_order),
       settings: lsettings(),
+      slides: lread<HeroSlide>('hero_slides', () => seedSlides).filter((x) => x.is_active).sort((a, b) => a.sort_order - b.sort_order),
     })
   }
-  const [c, p, s] = await Promise.all([
+  const [c, p, s, h] = await Promise.all([
     sb.from('categories').select('*').eq('is_active', true).order('sort_order'),
     sb.from('products').select('*').eq('is_active', true).order('sort_order'),
     sb.from('settings').select('value').eq('key', 'site').maybeSingle(),
+    sb.from('hero_slides').select('*').eq('is_active', true).order('sort_order'),
   ])
   if (c.error) return fail(errMsg(c.error))
   if (p.error) return fail(errMsg(p.error))
@@ -152,6 +154,8 @@ async function loadStorefront(): Promise<Res<{ categories: Category[]; products:
     categories: (c.data ?? []) as Category[],
     products: (p.data ?? []) as Product[],
     settings: { ...seedSettings, ...((s.data?.value as Partial<SiteSettings>) ?? {}) },
+    // If the hero_slides table has not been created yet the storefront still loads and the hero shows its default slides.
+    slides: h.error ? [] : ((h.data ?? []) as HeroSlide[]),
   })
 }
 
@@ -421,6 +425,7 @@ const submitReview = (input: ReviewInput) => guard(() => send('review', input, (
 const seeds: Partial<Record<AdminTable, () => unknown[]>> = {
   products: () => seedProducts,
   categories: () => seedCategories,
+  hero_slides: () => seedSlides,
   reviews: () => seedReviews,
 }
 const selects: Partial<Record<AdminTable, string>> = { orders: '*, order_items(*)' }
@@ -431,13 +436,13 @@ async function adminList<T>(table: AdminTable): Promise<Res<T[]>> {
     const rows = lread<Record<string, unknown>>(table, (seeds[table] as () => Record<string, unknown>[]) ?? (() => []))
     return ok(sortRows(table, rows) as T[])
   }
-  const orderCol = table === 'products' || table === 'categories' ? 'sort_order' : 'created_at'
+  const orderCol = table === 'products' || table === 'categories' || table === 'hero_slides' ? 'sort_order' : 'created_at'
   const { data, error } = await sb.from(table).select(selects[table] ?? '*').order(orderCol, { ascending: orderCol === 'sort_order' })
   return error ? fail(errMsg(error)) : ok((data ?? []) as unknown as T[])
 }
 
 function sortRows(table: AdminTable, rows: Record<string, unknown>[]) {
-  if (table === 'products' || table === 'categories') return [...rows].sort((a, b) => Number(a.sort_order) - Number(b.sort_order))
+  if (table === 'products' || table === 'categories' || table === 'hero_slides') return [...rows].sort((a, b) => Number(a.sort_order) - Number(b.sort_order))
   return [...rows].sort((a, b) => String(b.created_at).localeCompare(String(a.created_at)))
 }
 
