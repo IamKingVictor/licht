@@ -73,7 +73,7 @@ export default function ShopView({ fixedCategory, hideFilters = false }: { fixed
           <div className="-mx-5 flex gap-2 overflow-x-auto px-5 pb-1 sm:mx-0 sm:flex-wrap sm:px-0" role="tablist" aria-label="Categories">
             {[{ slug: '', name: 'All' }, ...categories].map((c) => {
               const on = category === c.slug
-              return <button key={c.slug} role="tab" aria-selected={on} onClick={() => set({ category: c.slug })} className={`shrink-0 border px-4 py-2.5 text-[10px] uppercase tracking-[0.16em] ${on ? 'border-ink bg-ink text-white' : 'border-line'}`}>{c.name}</button>
+              return <button key={c.slug} role="tab" aria-selected={on} onClick={() => set({ category: c.slug })} className={`shrink-0 rounded-full border px-5 py-2.5 text-[10px] font-medium uppercase tracking-[0.16em] transition-all hover:-translate-y-0.5 ${on ? 'border-transparent bg-rose text-white shadow-md' : 'border-line bg-white/70 hover:border-rose hover:text-rose'}`}>{c.name}</button>
             })}
           </div>
           <div className="flex flex-wrap items-center gap-3">

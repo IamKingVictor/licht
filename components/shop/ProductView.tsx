@@ -70,7 +70,7 @@ function Detail({ product, related, settings }: { product: Product; related: Pro
             {product.images.length > 1 && (
               <div className="mt-3 grid grid-cols-4 gap-3">
                 {product.images.map((src, i) => (
-                  <button key={src + i} onClick={() => setImg(i)} aria-label={`Show image ${i + 1}`} aria-current={i === img} className={`relative aspect-square overflow-hidden bg-sand ring-offset-2 ${i === img ? 'ring-1 ring-gold' : 'opacity-80'}`}><ProductImage src={src} alt="" sizes="120px" /></button>
+                  <button key={src + i} onClick={() => setImg(i)} aria-label={`Show image ${i + 1}`} aria-current={i === img} className={`relative aspect-square overflow-hidden rounded-xl bg-sand ring-offset-2 transition-all hover:opacity-100 ${i === img ? 'ring-2 ring-rose' : 'opacity-80'}`}><ProductImage src={src} alt="" sizes="120px" /></button>
                 ))}
               </div>
             )}
@@ -102,7 +102,7 @@ function Detail({ product, related, settings }: { product: Product; related: Pro
                 <button aria-label="Increase quantity" onClick={() => setQty(Math.min(maxQty, qty + (product.min_quantity > 10 ? 5 : 1)))} className="p-3.5"><Plus size={14} /></button>
               </div>
               <button onClick={() => addToCart()} disabled={soldOut} className="btn-dark flex-1 sm:flex-none sm:px-10">{soldOut ? 'Sold out' : `Add to cart · ${money(product.price * qty)}`}</button>
-              <button aria-label={has(product.slug) ? 'Remove from wishlist' : 'Add to wishlist'} aria-pressed={has(product.slug)} onClick={() => toggle(product.slug, product.name)} className="border border-line p-3.5"><Heart size={16} strokeWidth={1.5} fill={has(product.slug) ? '#9a7644' : 'none'} className={has(product.slug) ? 'text-gold' : ''} /></button>
+              <button aria-label={has(product.slug) ? 'Remove from wishlist' : 'Add to wishlist'} aria-pressed={has(product.slug)} onClick={() => toggle(product.slug, product.name)} className="rounded-full border border-line p-3.5 transition-all hover:scale-105 hover:border-rose hover:bg-blush"><Heart size={16} strokeWidth={1.5} fill={has(product.slug) ? '#c2557a' : 'none'} className={has(product.slug) ? 'text-rose' : ''} /></button>
             </div>
             {errors.qty && <p className="err-text">{errors.qty}</p>}
             {product.min_quantity > 1 && <p className="mt-3 text-xs text-muted">Minimum order of {product.min_quantity}. Need hundreds? <Link href={`/quote?type=bulk&product=${product.slug}`} className="border-b border-gold text-gold">Request a bulk quote</Link>.</p>}

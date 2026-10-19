@@ -86,11 +86,11 @@ export default function Header() {
   return (
     <>
       {settings.announcement && (
-        <div className="bg-ink-deep px-4 py-2 text-center text-[10px] font-medium uppercase leading-5 tracking-[0.25em] text-[#e8c995]">
+        <div className="announce px-4 py-2 text-center text-[10px] font-medium uppercase leading-5 tracking-[0.25em] text-[#fff1d6]">
           {settings.announcement}
         </div>
       )}
-      <header className="sticky top-0 z-40 border-b border-line bg-cream/95 backdrop-blur-sm">
+      <header className="sticky top-0 z-40 border-b border-line bg-cream/90 shadow-[0_6px_24px_-14px_rgba(156,58,94,0.35)] backdrop-blur-md">
         <div className="mx-auto flex max-w-[1360px] items-center justify-between gap-4 px-5 py-4 lg:px-10 lg:py-5">
           <button
             aria-label={open ? "Close menu" : "Open menu"}
@@ -132,11 +132,11 @@ export default function Header() {
             <Link
               href="/wishlist"
               aria-label={`Wishlist, ${slugs.length} saved`}
-              className="relative hidden p-2 sm:block"
+              className="relative hidden rounded-full p-2 transition-all hover:scale-110 hover:bg-blush hover:text-rose sm:block"
             >
               <Heart size={18} strokeWidth={1.5} />
               {slugs.length > 0 && (
-                <span className="absolute right-0 top-0 flex h-4 w-4 items-center justify-center rounded-full bg-gold-soft text-[9px] text-white">
+                <span className="absolute right-0 top-0 flex h-4 w-4 items-center justify-center rounded-full bg-rose text-[9px] text-white">
                   {slugs.length}
                 </span>
               )}
@@ -144,18 +144,18 @@ export default function Header() {
             <Link
               href="/account"
               aria-label={user ? "My account" : "Sign in"}
-              className="hidden p-2 sm:block"
+              className="hidden rounded-full p-2 transition-all hover:scale-110 hover:bg-blush hover:text-rose sm:block"
             >
               <User size={18} strokeWidth={1.5} />
             </Link>
             <Link
               href="/cart"
               aria-label={`Shopping basket, ${count} items`}
-              className="relative p-2"
+              className="relative rounded-full p-2 transition-all hover:scale-110 hover:bg-blush hover:text-rose"
             >
               <ShoppingBag size={19} strokeWidth={1.5} />
               {count > 0 && (
-                <span className="absolute right-0 top-0 flex h-4 min-w-4 items-center justify-center rounded-full bg-gold-soft px-1 text-[9px] text-white">
+                <span className="absolute right-0 top-0 flex h-4 min-w-4 items-center justify-center rounded-full bg-rose px-1 text-[9px] text-white">
                   {count}
                 </span>
               )}
@@ -197,7 +197,7 @@ export default function Header() {
                 )}
               </div>
               {suggestions.length > 0 && (
-                <ul className="mt-2 divide-y divide-line border border-line bg-white">
+                <ul className="mt-2 divide-y divide-line overflow-hidden rounded-2xl border border-line bg-white shadow-lg">
                   {suggestions.map((p) => (
                     <li key={p.slug}>
                       <Link

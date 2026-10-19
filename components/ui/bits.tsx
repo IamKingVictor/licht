@@ -10,7 +10,7 @@ export function SectionHead({ eyebrow, title, em, action, center = false, light 
         <h2 className="h2">{title} {em && <em className={light ? 'text-champagne' : ''}>{em}</em>}</h2>
       </div>
       {action && (
-        <Link href={action.href} className="hidden shrink-0 items-center gap-2 text-[10px] uppercase tracking-[0.17em] hover:text-gold sm:flex">{action.label} <ArrowRight size={14} /></Link>
+        <Link href={action.href} className="group hidden shrink-0 items-center gap-2 rounded-full border border-line bg-white/70 px-4 py-2 text-[10px] font-medium uppercase tracking-[0.17em] transition-all hover:-translate-y-0.5 hover:border-rose hover:text-rose sm:flex">{action.label} <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" /></Link>
       )}
     </div>
   )
@@ -18,7 +18,7 @@ export function SectionHead({ eyebrow, title, em, action, center = false, light 
 
 export function PageHero({ eyebrow, title, em, text, children, crumbs }: { eyebrow?: string; title: string; em?: string; text?: string; children?: ReactNode; crumbs?: { href?: string; label: string }[] }) {
   return (
-    <section className="border-b border-line bg-sand px-5 py-14 sm:py-20 lg:px-10">
+    <section className="page-hero px-5 py-14 sm:py-20 lg:px-10">
       <div className="mx-auto max-w-[1360px]">
         {crumbs && (
           <nav aria-label="Breadcrumb" className="mb-6 flex flex-wrap items-center gap-2 text-[10px] uppercase tracking-[0.16em] text-muted">
@@ -44,7 +44,7 @@ export function Stars({ value, size = 14 }: { value: number; size?: number }) {
 }
 
 export function Skeleton({ className = '' }: { className?: string }) {
-  return <div className={`animate-pulse bg-sand ${className}`} aria-hidden />
+  return <div className={`animate-pulse rounded-2xl bg-sand ${className}`} aria-hidden />
 }
 
 export function EmptyState({ title, text, action }: { title: string; text?: string; action?: ReactNode }) {

@@ -32,26 +32,26 @@ export default function ProductCard({ product, priority }: { product: Product; p
   }
 
   return (
-    <article>
-      <div className="group relative aspect-square overflow-hidden bg-sand">
+    <article className="transition-transform duration-300 hover:-translate-y-1">
+      <div className="group relative aspect-square overflow-hidden rounded-2xl bg-sand shadow-sm transition-shadow duration-300 hover:shadow-xl">
         <Link href={`/shop/${product.slug}`} aria-label={product.name} className="absolute inset-0">
           <ProductImage src={product.images[0]} alt={product.name} priority={priority} sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw" className="transition-transform duration-700 group-hover:scale-105" />
         </Link>
-        {product.is_bestseller && <span className="absolute left-2 top-2 bg-cream/90 px-2 py-0.5 text-[8px] uppercase tracking-[0.16em] text-gold">Bestseller</span>}
-        {soldOut && <span className="absolute left-2 top-2 bg-ink px-2 py-0.5 text-[8px] uppercase tracking-[0.16em] text-white">Sold out</span>}
-        <button aria-label={liked ? 'Remove from wishlist' : 'Add to wishlist'} aria-pressed={liked} onClick={() => toggle(product.slug, product.name)} className="absolute right-2 top-2 rounded-full bg-cream/85 p-1.5">
-          <Heart size={14} fill={liked ? '#9a7644' : 'none'} className={liked ? 'text-gold' : ''} strokeWidth={1.5} />
+        {product.is_bestseller && <span className="absolute left-2 top-2 rounded-full bg-white/90 px-2.5 py-1 text-[8px] font-semibold uppercase tracking-[0.16em] text-gold">Bestseller</span>}
+        {soldOut && <span className="absolute left-2 top-2 rounded-full bg-ink px-2.5 py-1 text-[8px] uppercase tracking-[0.16em] text-white">Sold out</span>}
+        <button aria-label={liked ? 'Remove from wishlist' : 'Add to wishlist'} aria-pressed={liked} onClick={() => toggle(product.slug, product.name)} className="absolute right-2 top-2 rounded-full bg-white/90 p-2 shadow transition-all hover:scale-110 hover:bg-white">
+          <Heart size={14} fill={liked ? '#c2557a' : 'none'} className={liked ? 'text-rose' : ''} strokeWidth={1.5} />
         </button>
-        <button onClick={quickAdd} disabled={soldOut} className="absolute inset-x-2 bottom-2 hidden bg-ink/95 py-2.5 text-[9px] uppercase tracking-[0.18em] text-white disabled:opacity-60 md:block">
+        <button onClick={quickAdd} disabled={soldOut} className="btn-quick absolute inset-x-3 bottom-3 hidden md:block">
           {soldOut ? 'Sold out' : needsOptions ? 'Personalise & add' : 'Add to cart'}
         </button>
       </div>
       <div className="pt-2.5">
-        <h3 className="line-clamp-1 font-serif text-[17px] leading-tight sm:text-lg"><Link href={`/shop/${product.slug}`} className="hover:text-gold">{product.name}</Link></h3>
+        <h3 className="line-clamp-1 font-serif text-[17px] leading-tight sm:text-lg"><Link href={`/shop/${product.slug}`} className="transition-colors hover:text-rose">{product.name}</Link></h3>
         <p className="mt-0.5 line-clamp-1 text-[11px] leading-4 text-[#7d746b]">{product.short_description}</p>
         <p className="mt-1 flex items-center justify-between gap-2 text-[12px] font-medium text-gold"><span>{product.price_is_from ? 'From ' : ''}{money(product.price)}</span>{product.is_personalisable && <span className="text-[9px] font-normal uppercase tracking-[0.12em]">Personalisable</span>}</p>
       </div>
-      <button onClick={quickAdd} disabled={soldOut} className="mt-2 w-full border border-ink py-2 text-[9px] uppercase tracking-[0.16em] disabled:opacity-50 md:hidden">{soldOut ? 'Sold out' : needsOptions ? 'Personalise & add' : 'Add to cart'}</button>
+      <button onClick={quickAdd} disabled={soldOut} className="btn-quick-m mt-2 w-full md:hidden">{soldOut ? 'Sold out' : needsOptions ? 'Personalise & add' : 'Add to cart'}</button>
     </article>
   )
 }

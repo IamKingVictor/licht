@@ -12,7 +12,7 @@ const tone: Record<string, string> = {
   cancelled: 'bg-[#f3d9d2] text-[#7a2f20]', declined: 'bg-[#f3d9d2] text-[#7a2f20]', refunded: 'bg-[#f3d9d2] text-[#7a2f20]',
   closed: 'bg-nude text-ink', archived: 'bg-nude text-ink',
 }
-export const Pill = ({ value }: { value: string }) => <span className={`inline-block whitespace-nowrap px-2.5 py-1 text-[10px] uppercase tracking-[0.12em] ${tone[value] ?? 'bg-nude text-ink'}`}>{humanise(value)}</span>
+export const Pill = ({ value }: { value: string }) => <span className={`inline-block whitespace-nowrap rounded-full px-3 py-1 text-[10px] uppercase tracking-[0.12em] ${tone[value] ?? 'bg-nude text-ink'}`}>{humanise(value)}</span>
 
 export function Drawer({ open, onClose, title, children, wide }: { open: boolean; onClose: () => void; title: string; children: ReactNode; wide?: boolean }) {
   useEffect(() => {
@@ -26,7 +26,7 @@ export function Drawer({ open, onClose, title, children, wide }: { open: boolean
   return (
     <div className="fixed inset-0 z-[60]" role="dialog" aria-modal="true" aria-label={title}>
       <button aria-label="Close" className="absolute inset-0 bg-ink/50" onClick={onClose} />
-      <div className={`absolute inset-y-0 right-0 flex w-full flex-col bg-cream shadow-2xl animate-in slide-in-from-right duration-200 ${wide ? 'max-w-3xl' : 'max-w-xl'}`}>
+      <div className={`absolute inset-y-0 right-0 flex w-full flex-col rounded-l-3xl bg-cream shadow-2xl animate-in slide-in-from-right duration-200 ${wide ? 'max-w-3xl' : 'max-w-xl'}`}>
         <div className="flex items-center justify-between border-b border-line px-6 py-4"><h2 className="font-serif text-2xl">{title}</h2><button aria-label="Close" onClick={onClose} className="p-1"><X size={20} /></button></div>
         <div className="flex-1 overflow-y-auto px-6 py-6">{children}</div>
       </div>
@@ -36,7 +36,7 @@ export function Drawer({ open, onClose, title, children, wide }: { open: boolean
 
 export function Panel({ title, action, children }: { title?: string; action?: ReactNode; children: ReactNode }) {
   return (
-    <section className="border border-line bg-white/60">
+    <section className="overflow-hidden rounded-2xl border border-line bg-white/70 shadow-sm">
       {(title || action) && <div className="flex items-center justify-between gap-3 border-b border-line px-5 py-4"><h2 className="font-serif text-xl">{title}</h2>{action}</div>}
       {children}
     </section>

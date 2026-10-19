@@ -2,7 +2,7 @@
  * Strategy: static assets stale-while-revalidate, pages network-first with offline fallback,
  * cross-origin (Supabase) and non-GET requests are never cached.
  */
-const VERSION = 'licht-v1'
+const VERSION = 'licht-v2'
 const STATIC = `${VERSION}-static`
 const PAGES = `${VERSION}-pages`
 const PRECACHE = ['/offline', '/icons/icon-192.png', '/icons/icon-512.png', '/images/products/led-vanity-mirror.jpg']
