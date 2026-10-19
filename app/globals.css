@@ -99,6 +99,11 @@ input:focus-visible, select:focus-visible, textarea:focus-visible { outline: non
   .page-hero > * { position: relative; z-index: 1; }
   section.bg-ink { background-image: linear-gradient(135deg, #3a1c2b, #56263f 55%, #3a2418); border-radius: 2rem; margin-inline: clamp(0.5rem, 2vw, 1.5rem); }
 
+  /* hero: gifts & souvenirs collage at 50% opacity (mobile gets a portrait crop) */
+  .hero-bg { background: url('/images/hero-bg-m.webp') center / cover no-repeat; opacity: 0.5; }
+  @media (min-width: 768px) { .hero-bg { background-image: url('/images/hero-bg.webp'); } }
+  .hero-fill { width: 0; animation-name: hero-fill; animation-timing-function: linear; animation-fill-mode: forwards; }
+
   /* rounded edges everywhere */
   .overflow-hidden { border-radius: 1.25rem; }
   .border.border-line, .border.border-dashed, .card { border-radius: 1rem; }
@@ -114,6 +119,8 @@ input:focus-visible, select:focus-visible, textarea:focus-visible { outline: non
   .card { @apply border border-line bg-white/70 shadow-sm; }
   .rule { @apply border-t border-line; }
 }
+
+@keyframes hero-fill { from { width: 0; } to { width: 100%; } }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

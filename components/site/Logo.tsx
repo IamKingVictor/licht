@@ -17,7 +17,7 @@ export default function Logo({ className = '', dark = false }: { className?: str
         </>
       ) : (
         // eslint-disable-next-line @next/next/no-img-element
-        <img src="/logo.png" alt="LICHT SIGNATURE SOUVENIRS" onError={() => setFailed(true)} className="h-10 w-auto max-w-[200px] object-contain sm:h-12 sm:max-w-[240px]" />
+        <img src="/logo.png" alt="LICHT SIGNATURE SOUVENIRS" onError={() => setFailed(true)} className="h-12 w-auto rounded-xl object-contain shadow-sm sm:h-14" />
       )}
     </Link>
   )

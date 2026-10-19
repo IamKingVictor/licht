@@ -7,6 +7,7 @@ import { OCCASIONS, STEPS, USPS } from '@/lib/content'
 import ProductCard from '@/components/shop/ProductCard'
 import { SectionHead, Skeleton } from '@/components/ui/bits'
 import Testimonials from './Testimonials'
+import HeroCarousel from './HeroCarousel'
 
 const gallery = ['decorative-mirror', 'luxe-velvet-vanity-chair', 'pura-4-smart-fragrance-diffuser', 'marble-shelf', 'customizable-smart-light-bulbs', 'portable-uv-phone-sanitizer'].map((s) => `/images/products/${s}.jpg`)
 
@@ -18,26 +19,7 @@ export default function HomeView() {
 
   return (
     <>
-      <section id="top" className="mx-auto grid max-w-[1360px] items-center gap-10 px-5 py-12 sm:py-16 md:grid-cols-[0.88fr_1.12fr] md:gap-10 md:px-10 md:py-20">
-        <div className="order-2 max-w-xl md:order-1">
-          <p className="mb-6 flex items-center gap-3 text-[10px] uppercase tracking-[0.32em] text-gold"><span className="h-px w-8 bg-gold-soft" /> Premium gifting, thoughtfully made</p>
-          <h1 className="max-w-[590px] font-serif text-[48px] leading-[0.98] tracking-[-0.035em] sm:text-6xl lg:text-[78px]">Memorable moments.<br /><em className="font-light text-gold">Beautifully preserved.</em></h1>
-          <p className="mt-7 max-w-md text-[15px] leading-7 text-muted">From elegant event souvenirs to personalised gifts, we help you celebrate life&apos;s special moments with gifts worth remembering.</p>
-          <div className="mt-9 flex flex-wrap items-center gap-5">
-            <Link href="/shop" className="btn-dark">Shop now <ArrowRight size={15} /></Link>
-            <Link href="#collections" className="link-line">Explore collection <ArrowRight size={14} /></Link>
-          </div>
-          <div className="mt-12 flex gap-10 border-t border-line pt-6">
-            <div><p className="font-serif text-2xl text-gold">01</p><p className="mt-1 text-[10px] uppercase tracking-[0.16em] text-[#777067]">Curated with care</p></div>
-            <div><p className="font-serif text-2xl text-gold">∞</p><p className="mt-1 text-[10px] uppercase tracking-[0.16em] text-[#777067]">Made for memories</p></div>
-          </div>
-        </div>
-        <div className="relative order-1 md:order-2">
-          <div className="absolute -bottom-5 -left-5 h-28 w-28 border border-gold-soft sm:-bottom-7 sm:-left-7" />
-          <div className="relative aspect-[0.93] overflow-hidden"><Image src="/images/products/led-vanity-mirror.jpg" alt="Backlit round LED vanity mirror in an elegant bathroom" fill priority className="object-cover" sizes="(max-width: 768px) 100vw, 55vw" /></div>
-          <div className="absolute bottom-5 right-5 bg-cream px-5 py-4 sm:bottom-8 sm:right-8"><p className="font-serif text-lg">Every moment</p><p className="text-[9px] uppercase tracking-[0.2em] text-gold">deserves a signature</p></div>
-        </div>
-      </section>
+      <HeroCarousel />
 
       <section id="collections" className="bg-sand px-5 py-16 sm:py-20 lg:px-10">
         <div className="mx-auto max-w-[1360px]">

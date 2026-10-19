@@ -2,7 +2,7 @@
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { useEffect, useState, type ReactNode } from 'react'
-import { BarChart3, CalendarCheck, ExternalLink, FileText, LogOut, Mail, Menu, MessageSquare, Package, Settings, ShoppingBag, Star, Users, X } from 'lucide-react'
+import { BarChart3, CalendarCheck, ExternalLink, FileText, Images, LogOut, Mail, Menu, MessageSquare, Package, Settings, ShoppingBag, Star, Users, X } from 'lucide-react'
 import { useAuth } from '@/lib/auth'
 import { HAS_SUPABASE } from '@/lib/config'
 import { Spinner } from '@/components/ui/fields'
@@ -11,6 +11,7 @@ const NAV = [
   { href: '/admin', label: 'Dashboard', icon: BarChart3 },
   { href: '/admin/orders', label: 'Orders', icon: ShoppingBag },
   { href: '/admin/products', label: 'Products', icon: Package },
+  { href: '/admin/carousel', label: 'Carousel', icon: Images },
   { href: '/admin/quotes', label: 'Quotations', icon: FileText },
   { href: '/admin/bookings', label: 'Bookings', icon: CalendarCheck },
   { href: '/admin/messages', label: 'Messages', icon: MessageSquare },
