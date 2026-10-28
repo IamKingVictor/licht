@@ -48,7 +48,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             <Script id="ga" strategy="afterInteractive">{`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','${GA_ID}');`}</Script>
           </>
         )}
-        {process.env.NODE_ENV === 'production' && <Analytics />}
+        {/* Vercel Analytics only exists on Vercel; on Cloudflare use GA (NEXT_PUBLIC_GA_ID) or Cloudflare Web Analytics */}
+        {process.env.VERCEL && <Analytics />}
       </body>
     </html>
   )
