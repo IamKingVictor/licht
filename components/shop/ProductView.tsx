@@ -60,8 +60,8 @@ function Detail({ product, related, settings }: { product: Product; related: Pro
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(ld) }} />
       <div className="mx-auto max-w-[1360px] px-5 py-8 lg:px-10 lg:py-12">
         <nav aria-label="Breadcrumb" className="mb-8 flex flex-wrap items-center gap-2 text-[10px] uppercase tracking-[0.16em] text-muted">
-          <Link href="/" className="hover:text-gold">Home</Link><span>/</span><Link href="/shop" className="hover:text-gold">Shop</Link>
-          {category && <><span>/</span><Link href={`/shop?category=${category.slug}`} className="hover:text-gold">{category.name}</Link></>}
+          <Link href="/" className="hover:text-forest">Home</Link><span>/</span><Link href="/shop" className="hover:text-forest">Shop</Link>
+          {category && <><span>/</span><Link href={`/shop?category=${category.slug}`} className="hover:text-forest">{category.name}</Link></>}
           <span>/</span><span className="text-ink">{product.name}</span>
         </nav>
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
@@ -70,7 +70,7 @@ function Detail({ product, related, settings }: { product: Product; related: Pro
             {product.images.length > 1 && (
               <div className="mt-3 grid grid-cols-4 gap-3">
                 {product.images.map((src, i) => (
-                  <button key={src + i} onClick={() => setImg(i)} aria-label={`Show image ${i + 1}`} aria-current={i === img} className={`relative aspect-square overflow-hidden rounded-xl bg-sand ring-offset-2 transition-all hover:opacity-100 ${i === img ? 'ring-2 ring-rose' : 'opacity-80'}`}><ProductImage src={src} alt="" sizes="120px" /></button>
+                  <button key={src + i} onClick={() => setImg(i)} aria-label={`Show image ${i + 1}`} aria-current={i === img} className={`relative aspect-square overflow-hidden rounded-xl bg-sand ring-offset-2 transition-all hover:opacity-100 ${i === img ? 'ring-2 ring-forest' : 'opacity-80'}`}><ProductImage src={src} alt="" sizes="120px" /></button>
                 ))}
               </div>
             )}
@@ -80,12 +80,12 @@ function Detail({ product, related, settings }: { product: Product; related: Pro
             {product.is_bestseller && <p className="eyebrow mb-3">Bestseller</p>}
             <h1 className="font-serif text-4xl leading-[1.02] tracking-[-0.03em] sm:text-5xl">{product.name}</h1>
             {reviews.length > 0 && <a href="#reviews" className="mt-3 flex items-center gap-2 text-xs text-muted"><Stars value={avg} /> {avg.toFixed(1)} ({reviews.length})</a>}
-            <p className="mt-4 font-serif text-3xl text-gold">{product.price_is_from ? <span className="mr-1 text-base font-sans text-muted">From</span> : null}{money(product.price)}</p>
+            <p className="mt-4 font-serif text-3xl text-forest">{product.price_is_from ? <span className="mr-1 text-base font-sans text-muted">From</span> : null}{money(product.price)}</p>
             <p className="mt-5 text-[15px] leading-7 text-muted">{product.description || product.short_description}</p>
 
             {product.is_personalisable && (
               <fieldset id="personalise" className="mt-8 space-y-4 border border-line bg-white/50 p-5">
-                <legend className="px-2 text-[10px] uppercase tracking-[0.22em] text-gold">Make it personal</legend>
+                <legend className="px-2 text-[10px] uppercase tracking-[0.22em] text-forest">Make it personal</legend>
                 {product.personalisation_fields.map((f) => f.type === 'textarea' ? (
                   <TextArea key={f.key} name={f.key} label={f.label} required={f.required} rows={3} maxLength={f.maxLength} placeholder={f.placeholder} value={values[f.key] ?? ''} onChange={(e) => setValues({ ...values, [f.key]: e.target.value })} error={errors[f.key]} hint={f.maxLength ? `${(values[f.key] ?? '').length}/${f.maxLength}` : undefined} />
                 ) : (
@@ -102,17 +102,17 @@ function Detail({ product, related, settings }: { product: Product; related: Pro
                 <button aria-label="Increase quantity" onClick={() => setQty(Math.min(maxQty, qty + (product.min_quantity > 10 ? 5 : 1)))} className="p-3.5"><Plus size={14} /></button>
               </div>
               <button onClick={() => addToCart()} disabled={soldOut} className="btn-dark flex-1 sm:flex-none sm:px-10">{soldOut ? 'Sold out' : `Add to cart · ${money(product.price * qty)}`}</button>
-              <button aria-label={has(product.slug) ? 'Remove from wishlist' : 'Add to wishlist'} aria-pressed={has(product.slug)} onClick={() => toggle(product.slug, product.name)} className="rounded-full border border-line p-3.5 transition-all hover:scale-105 hover:border-rose hover:bg-blush"><Heart size={16} strokeWidth={1.5} fill={has(product.slug) ? '#c2557a' : 'none'} className={has(product.slug) ? 'text-rose' : ''} /></button>
+              <button aria-label={has(product.slug) ? 'Remove from wishlist' : 'Add to wishlist'} aria-pressed={has(product.slug)} onClick={() => toggle(product.slug, product.name)} className="rounded-full border border-line p-3.5 transition-all hover:scale-105 hover:border-forest hover:bg-mist"><Heart size={16} strokeWidth={1.5} fill={has(product.slug) ? '#1f3b32' : 'none'} className={has(product.slug) ? 'text-forest' : ''} /></button>
             </div>
             {errors.qty && <p className="err-text">{errors.qty}</p>}
-            {product.min_quantity > 1 && <p className="mt-3 text-xs text-muted">Minimum order of {product.min_quantity}. Need hundreds? <Link href={`/quote?type=bulk&product=${product.slug}`} className="border-b border-gold text-gold">Request a bulk quote</Link>.</p>}
+            {product.min_quantity > 1 && <p className="mt-3 text-xs text-muted">Minimum order of {product.min_quantity}. Need hundreds? <Link href={`/quote?type=bulk&product=${product.slug}`} className="border-b border-gold text-forest">Request a bulk quote</Link>.</p>}
             {product.stock !== null && product.stock > 0 && product.stock <= 10 && <p className="mt-3 text-xs text-[#a3412e]">Only {product.stock} left in stock.</p>}
             <button onClick={() => addToCart(true)} disabled={soldOut} className="link-line mt-5">Add &amp; view basket</button>
 
             <ul className="mt-9 space-y-3 border-t border-line pt-6 text-xs text-muted">
-              <li className="flex items-center gap-3"><Clock size={16} className="text-gold" /> Usually prepared in {product.lead_time_days} working days</li>
-              <li className="flex items-center gap-3"><Truck size={16} className="text-gold" /> {settings.free_delivery_threshold > 0 ? `Free delivery over ${money(settings.free_delivery_threshold)}` : 'Delivery or collection available'}</li>
-              <li className="flex items-center gap-3"><ShieldCheck size={16} className="text-gold" /> Presented in premium gift packaging</li>
+              <li className="flex items-center gap-3"><Clock size={16} className="text-forest" /> Usually prepared in {product.lead_time_days} working days</li>
+              <li className="flex items-center gap-3"><Truck size={16} className="text-forest" /> {settings.free_delivery_threshold > 0 ? `Free delivery over ${money(settings.free_delivery_threshold)}` : 'Delivery or collection available'}</li>
+              <li className="flex items-center gap-3"><ShieldCheck size={16} className="text-forest" /> Presented in premium gift packaging</li>
             </ul>
           </div>
         </div>

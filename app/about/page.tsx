@@ -21,12 +21,12 @@ export default function AboutPage() {
           <blockquote className="border-l-2 border-gold-soft pl-5 font-serif text-2xl leading-snug text-ink">To turn ordinary gifts into extraordinary memories.</blockquote>
         </div>
       </section>
-      <section className="bg-ink px-5 py-16 text-cream sm:py-20 lg:px-10">
+      <section className="bg-forest px-5 py-16 text-cream sm:py-20 lg:px-10">
         <div className="mx-auto max-w-[1180px]">
-          <p className="mb-4 text-[10px] uppercase tracking-[0.3em] text-champagne">Our signature experience</p>
-          <h2 className="mb-12 font-serif text-4xl sm:text-5xl">Why choose <em className="font-light text-champagne">LICHT SIGNATURE SOUVENIRS?</em></h2>
+          <p className="mb-4 text-[10px] uppercase tracking-[0.2em] text-champagne">Our signature experience</p>
+          <h2 className="mb-12 font-serif text-4xl sm:text-5xl">Why choose <em className="text-champagne">LICHT SIGNATURE SOUVENIRS?</em></h2>
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {USPS.map((u) => (<div key={u.title} className="border-t border-[#5c5044] pt-4"><Sparkles size={16} className="mb-5 text-champagne" strokeWidth={1.3} /><h3 className="font-serif text-xl">{u.title}</h3><p className="mt-2 text-xs leading-5 text-[#aaa096]">{u.text}</p></div>))}
+            {USPS.map((u) => (<div key={u.title} className="border-t border-gold/50 pt-4"><Sparkles size={16} className="mb-5 text-champagne" strokeWidth={1.3} /><h3 className="font-serif text-xl">{u.title}</h3><p className="mt-2 text-xs leading-5 text-[#cfd6d1]">{u.text}</p></div>))}
           </div>
         </div>
       </section>

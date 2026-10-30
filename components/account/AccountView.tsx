@@ -98,7 +98,7 @@ function Dashboard() {
   return (
     <div className="mx-auto grid max-w-[1100px] gap-12 px-5 py-12 md:grid-cols-[1.4fr_1fr] lg:py-16">
       <section>
-        <h2 className="mb-6 flex items-center gap-3 font-serif text-3xl"><Package size={22} className="text-gold" /> Your orders</h2>
+        <h2 className="mb-6 flex items-center gap-3 font-serif text-3xl"><Package size={22} className="text-forest" /> Your orders</h2>
         {orders === null ? <Skeleton className="h-32" /> : ordersError ? <Alert kind="error">{ordersError}</Alert> : orders.length === 0 ? (
           <div className="border border-dashed border-line p-8 text-center"><p className="text-sm text-muted">You have not placed any orders yet.</p><Link href="/shop" className="btn-dark mt-5">Start shopping</Link></div>
         ) : (
@@ -115,7 +115,7 @@ function Dashboard() {
       </section>
       <section className="space-y-8">
         <form onSubmit={save} className="space-y-4">
-          <h2 className="flex items-center gap-3 font-serif text-3xl"><User size={22} className="text-gold" /> Your details</h2>
+          <h2 className="flex items-center gap-3 font-serif text-3xl"><User size={22} className="text-forest" /> Your details</h2>
           <Field name="email" label="Email" value={user?.email ?? ''} readOnly disabled />
           <Field name="full_name" label="Full name" value={name} onChange={(e) => setName(e.target.value)} autoComplete="name" />
           <Field name="phone" type="tel" label="Phone" value={phone} onChange={(e) => setPhone(e.target.value)} autoComplete="tel" />

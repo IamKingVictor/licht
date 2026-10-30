@@ -40,7 +40,7 @@ export default function AdminOrders() {
   return (
     <div>
       <Toolbar>
-        <div className="flex min-w-[220px] flex-1 items-center gap-2 border border-line bg-white/60 px-4 py-3"><Search size={15} className="text-gold" /><input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search order, name or email" aria-label="Search orders" className="w-full bg-transparent text-sm outline-none" /></div>
+        <div className="flex min-w-[220px] flex-1 items-center gap-2 border border-line bg-white/60 px-4 py-3"><Search size={15} className="text-forest" /><input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search order, name or email" aria-label="Search orders" className="w-full bg-transparent text-sm outline-none" /></div>
         <select value={status} onChange={(e) => setStatus(e.target.value)} aria-label="Filter by status" className="field !w-auto"><option value="">All statuses</option>{ORDER_STATUSES.map((s) => <option key={s} value={s}>{humanise(s)}</option>)}</select>
         <button onClick={reload} className="btn-line btn-sm">Refresh</button>
       </Toolbar>

@@ -73,12 +73,12 @@ export default function ShopView({ fixedCategory, hideFilters = false }: { fixed
           <div className="-mx-5 flex gap-2 overflow-x-auto px-5 pb-1 sm:mx-0 sm:flex-wrap sm:px-0" role="tablist" aria-label="Categories">
             {[{ slug: '', name: 'All' }, ...categories].map((c) => {
               const on = category === c.slug
-              return <button key={c.slug} role="tab" aria-selected={on} onClick={() => set({ category: c.slug })} className={`shrink-0 rounded-full border px-5 py-2.5 text-[10px] font-medium uppercase tracking-[0.16em] transition-all hover:-translate-y-0.5 ${on ? 'border-transparent bg-rose text-white shadow-md' : 'border-line bg-white/70 hover:border-rose hover:text-rose'}`}>{c.name}</button>
+              return <button key={c.slug} role="tab" aria-selected={on} onClick={() => set({ category: c.slug })} className={`shrink-0 rounded-full border px-5 py-2.5 text-[10px] font-medium uppercase tracking-[0.16em] transition-all hover:-translate-y-0.5 ${on ? 'border-transparent bg-forest text-white shadow-md' : 'border-line bg-white/70 hover:border-forest hover:text-forest'}`}>{c.name}</button>
             })}
           </div>
           <div className="flex flex-wrap items-center gap-3">
             <div className="flex min-w-[200px] flex-1 items-center gap-2 border border-line bg-white/60 px-4 py-3 focus-within:border-gold">
-              <Search size={15} className="text-gold" />
+              <Search size={15} className="text-forest" />
               <input value={q} onChange={(e) => setQ(e.target.value)} aria-label="Search products" placeholder="Search products" className="w-full bg-transparent text-sm outline-none placeholder:text-faint" />
               {q && <button aria-label="Clear search" onClick={() => setQ('')}><X size={14} /></button>}
             </div>
@@ -91,11 +91,11 @@ export default function ShopView({ fixedCategory, hideFilters = false }: { fixed
           {showFilters && (
             <div className="grid gap-5 border border-line bg-white/50 p-5 sm:grid-cols-3">
               <Select label="Price" value={price} onChange={(e) => set({ price: e.target.value })} options={PRICES} />
-              <label className="flex cursor-pointer items-center gap-3 self-end py-3 text-sm"><input type="checkbox" checked={personalised} onChange={(e) => set({ personalised: e.target.checked ? '1' : '' })} className="h-4 w-4 accent-[#9a7644]" /> Personalisable only</label>
-              <label className="flex cursor-pointer items-center gap-3 self-end py-3 text-sm"><input type="checkbox" checked={bestsellers} onChange={(e) => set({ filter: e.target.checked ? 'bestsellers' : '' })} className="h-4 w-4 accent-[#9a7644]" /> Bestsellers only</label>
+              <label className="flex cursor-pointer items-center gap-3 self-end py-3 text-sm"><input type="checkbox" checked={personalised} onChange={(e) => set({ personalised: e.target.checked ? '1' : '' })} className="h-4 w-4 accent-[#1f3b32]" /> Personalisable only</label>
+              <label className="flex cursor-pointer items-center gap-3 self-end py-3 text-sm"><input type="checkbox" checked={bestsellers} onChange={(e) => set({ filter: e.target.checked ? 'bestsellers' : '' })} className="h-4 w-4 accent-[#1f3b32]" /> Bestsellers only</label>
             </div>
           )}
-          <p className="text-xs text-muted" aria-live="polite">{ready ? `${list.length} product${list.length === 1 ? '' : 's'}` : 'Loading…'}{active > 0 && <button onClick={reset} className="ml-4 border-b border-gold text-gold">Clear all</button>}</p>
+          <p className="text-xs text-muted" aria-live="polite">{ready ? `${list.length} product${list.length === 1 ? '' : 's'}` : 'Loading…'}{active > 0 && <button onClick={reset} className="ml-4 border-b border-gold text-forest">Clear all</button>}</p>
         </div>
       )}
 

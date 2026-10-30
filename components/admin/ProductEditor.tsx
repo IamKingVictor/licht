@@ -65,7 +65,7 @@ export default function ProductEditor({ initial, categories, existingSlugs, onSa
         <Field label="Lead time (working days)" type="number" min={0} value={p.lead_time_days} onChange={(e) => set('lead_time_days', Number(e.target.value))} />
         <Field label="Minimum order quantity" type="number" min={1} value={p.min_quantity} onChange={(e) => set('min_quantity', Number(e.target.value))} />
         <div>
-          <label className="mb-2 flex items-center gap-2 text-sm"><input type="checkbox" checked={trackStock} onChange={(e) => { setTrackStock(e.target.checked); if (e.target.checked && p.stock === null) set('stock', 10) }} className="accent-[#9a7644]" /> Track stock</label>
+          <label className="mb-2 flex items-center gap-2 text-sm"><input type="checkbox" checked={trackStock} onChange={(e) => { setTrackStock(e.target.checked); if (e.target.checked && p.stock === null) set('stock', 10) }} className="accent-[#1f3b32]" /> Track stock</label>
           {trackStock ? <Field label="Units in stock" type="number" min={0} value={p.stock ?? 0} onChange={(e) => set('stock', Number(e.target.value))} /> : <p className="text-xs text-muted">Made to order — unlimited.</p>}
         </div>
         <Field label="Short description" value={p.short_description} onChange={(e) => set('short_description', e.target.value)} className="sm:col-span-2" />
@@ -84,14 +84,14 @@ export default function ProductEditor({ initial, categories, existingSlugs, onSa
               {i > 0 && <button onClick={() => moveFirst(i)} className="absolute inset-x-1 bottom-1 bg-cream/90 py-1 text-[9px] uppercase tracking-wider">Make main</button>}
             </div>
           ))}
-          <button type="button" onClick={() => file.current?.click()} disabled={uploading} className="flex aspect-square flex-col items-center justify-center gap-1 border border-dashed border-gold-soft text-xs text-gold">{uploading ? <Spinner /> : <ImagePlus size={20} />} Upload</button>
+          <button type="button" onClick={() => file.current?.click()} disabled={uploading} className="flex aspect-square flex-col items-center justify-center gap-1 border border-dashed border-gold-soft text-xs text-forest">{uploading ? <Spinner /> : <ImagePlus size={20} />} Upload</button>
         </div>
         <input ref={file} type="file" accept="image/*" multiple hidden onChange={(e) => upload(e.target.files)} />
         <div className="mt-3 flex gap-2"><input value={url} onChange={(e) => setUrl(e.target.value)} placeholder="…or paste an image URL" aria-label="Image URL" className="field" /><button type="button" className="btn-line btn-sm" onClick={() => { if (/^(https?:\/\/|\/)/.test(url.trim())) { set('images', [...p.images, url.trim()]); setUrl('') } else toast('Enter a valid image URL.', { kind: 'error' }) }}>Add</button></div>
       </div>
 
       <div className="space-y-4 border border-line bg-white/50 p-4">
-        <label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={p.is_personalisable} onChange={(e) => set('is_personalisable', e.target.checked)} className="accent-[#9a7644]" /> Customers can personalise this product</label>
+        <label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={p.is_personalisable} onChange={(e) => set('is_personalisable', e.target.checked)} className="accent-[#1f3b32]" /> Customers can personalise this product</label>
         {p.is_personalisable && (
           <div className="space-y-3">
             {p.personalisation_fields.map((f, i) => (
@@ -99,7 +99,7 @@ export default function ProductEditor({ initial, categories, existingSlugs, onSa
                 <Field label="Field label" value={f.label} onChange={(e) => setField(i, { label: e.target.value, key: f.key || slugify(e.target.value).replace(/-/g, '_') })} />
                 <Select label="Type" value={f.type} onChange={(e) => setField(i, { type: e.target.value as PersonaliseField['type'] })} options={[{ value: 'text', label: 'Short text' }, { value: 'textarea', label: 'Long text' }, { value: 'date', label: 'Date' }]} />
                 <Field label="Max chars" type="number" min={0} value={f.maxLength ?? ''} onChange={(e) => setField(i, { maxLength: e.target.value ? Number(e.target.value) : undefined })} />
-                <div className="flex items-end gap-3 pb-3"><label className="flex items-center gap-1.5 text-xs"><input type="checkbox" checked={!!f.required} onChange={(e) => setField(i, { required: e.target.checked })} className="accent-[#9a7644]" /> Required</label><button aria-label="Remove field" onClick={() => set('personalisation_fields', p.personalisation_fields.filter((_, n) => n !== i))}><Trash2 size={15} className="text-faint" /></button></div>
+                <div className="flex items-end gap-3 pb-3"><label className="flex items-center gap-1.5 text-xs"><input type="checkbox" checked={!!f.required} onChange={(e) => setField(i, { required: e.target.checked })} className="accent-[#1f3b32]" /> Required</label><button aria-label="Remove field" onClick={() => set('personalisation_fields', p.personalisation_fields.filter((_, n) => n !== i))}><Trash2 size={15} className="text-faint" /></button></div>
               </div>
             ))}
             <button type="button" className="btn-line btn-sm" onClick={() => set('personalisation_fields', [...p.personalisation_fields, { key: '', label: '', type: 'text' }])}><Plus size={14} /> Add field</button>
@@ -108,10 +108,10 @@ export default function ProductEditor({ initial, categories, existingSlugs, onSa
       </div>
 
       <div className="flex flex-wrap gap-x-8 gap-y-3 text-sm">
-        <label className="flex items-center gap-2"><input type="checkbox" checked={p.is_active} onChange={(e) => set('is_active', e.target.checked)} className="accent-[#9a7644]" /> Visible in shop</label>
-        <label className="flex items-center gap-2"><input type="checkbox" checked={p.is_bestseller} onChange={(e) => set('is_bestseller', e.target.checked)} className="accent-[#9a7644]" /> Bestseller</label>
-        <label className="flex items-center gap-2"><input type="checkbox" checked={p.is_featured} onChange={(e) => set('is_featured', e.target.checked)} className="accent-[#9a7644]" /> Featured first</label>
-        <label className="flex items-center gap-2"><input type="checkbox" checked={p.price_is_from} onChange={(e) => set('price_is_from', e.target.checked)} className="accent-[#9a7644]" /> Show “From” price</label>
+        <label className="flex items-center gap-2"><input type="checkbox" checked={p.is_active} onChange={(e) => set('is_active', e.target.checked)} className="accent-[#1f3b32]" /> Visible in shop</label>
+        <label className="flex items-center gap-2"><input type="checkbox" checked={p.is_bestseller} onChange={(e) => set('is_bestseller', e.target.checked)} className="accent-[#1f3b32]" /> Bestseller</label>
+        <label className="flex items-center gap-2"><input type="checkbox" checked={p.is_featured} onChange={(e) => set('is_featured', e.target.checked)} className="accent-[#1f3b32]" /> Featured first</label>
+        <label className="flex items-center gap-2"><input type="checkbox" checked={p.price_is_from} onChange={(e) => set('price_is_from', e.target.checked)} className="accent-[#1f3b32]" /> Show “From” price</label>
       </div>
       <Field label="Sort order" type="number" value={p.sort_order} onChange={(e) => set('sort_order', Number(e.target.value))} className="max-w-[160px]" />
 

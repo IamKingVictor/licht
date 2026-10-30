@@ -48,10 +48,10 @@ Deno.serve(async (req) => {
       : (STATUS_COPY[order.status] ?? `Your order status is now: ${esc(order.status)}.`)
 
     const html = `<div style="font-family:Georgia,serif;background:#f8f5ef;padding:32px;color:#241f1b"><div style="max-width:560px;margin:auto;background:#fff;padding:32px">
-      <p style="letter-spacing:.25em;font-size:22px;margin:0">LICHT</p><p style="letter-spacing:.35em;font-size:8px;color:#9a7644;margin:4px 0 24px">SIGNATURE SOUVENIRS</p>
+      <p style="letter-spacing:.25em;font-size:22px;margin:0">LICHT</p><p style="letter-spacing:.35em;font-size:8px;color:#1f3b32;margin:4px 0 24px">SIGNATURE SOUVENIRS</p>
       <h2 style="font-weight:400">Order ${esc(order.order_number)}</h2><p style="font-family:Arial,sans-serif;font-size:14px;line-height:1.6">Hello ${esc(order.customer_name.split(' ')[0])},<br><br>${intro}</p>
       <table style="width:100%;font-family:Arial,sans-serif;font-size:14px;border-collapse:collapse">${rows}<tr><td style="padding-top:12px">Delivery</td><td style="text-align:right;padding-top:12px">${gbp(order.delivery_fee)}</td></tr><tr><td><strong>Total</strong></td><td style="text-align:right"><strong>${gbp(order.total)}</strong></td></tr></table>
-      ${siteUrl ? `<p style="font-family:Arial,sans-serif;font-size:13px;margin-top:24px"><a href="${siteUrl}/track-order" style="color:#9a7644">Track your order</a></p>` : ''}
+      ${siteUrl ? `<p style="font-family:Arial,sans-serif;font-size:13px;margin-top:24px"><a href="${siteUrl}/track-order" style="color:#1f3b32">Track your order</a></p>` : ''}
       <p style="font-family:Arial,sans-serif;font-size:12px;color:#6e655d;margin-top:32px">Every moment deserves a signature.</p></div></div>`
 
     const subject = type === 'confirmation' ? `We received your order ${order.order_number}` : `Your order ${order.order_number}: ${order.status}`

@@ -70,7 +70,7 @@ export default function AdminCarousel() {
               <li key={s.id} className="flex flex-wrap items-center gap-4 p-4 sm:flex-nowrap">
                 <div className="relative h-20 w-28 shrink-0 overflow-hidden rounded-xl bg-sand"><ProductImage src={s.image_url} alt="" sizes="112px" /></div>
                 <div className="min-w-0 flex-1">
-                  <p className="truncate font-serif text-lg leading-tight">{s.title} <span className="text-rose">{s.title_em}</span></p>
+                  <p className="truncate font-serif text-lg leading-tight">{s.title} <span className="text-forest">{s.title_em}</span></p>
                   <p className="mt-1 truncate text-xs text-muted">{s.eyebrow || 'No label'} · {s.cta_label ? `Button: ${s.cta_label}` : 'No button'}</p>
                   <span className={`mt-2 inline-block rounded-full px-3 py-1 text-[10px] uppercase tracking-[0.12em] ${s.is_active ? 'bg-[#dcebd3] text-[#3a5a26]' : 'bg-nude text-ink'}`}>{s.is_active ? 'Visible' : 'Hidden'}</span>
                 </div>
@@ -111,7 +111,7 @@ export default function AdminCarousel() {
               <Field label="Second link text" value={edit.cta2_label} onChange={(e) => setEdit({ ...edit, cta2_label: e.target.value })} placeholder="Request a quote" />
               <Field label="Second link" value={edit.cta2_href} onChange={(e) => setEdit({ ...edit, cta2_href: e.target.value })} placeholder="/quote" />
             </div>
-            <label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={edit.is_active} onChange={(e) => setEdit({ ...edit, is_active: e.target.checked })} className="accent-[#c2557a]" /> Show this slide on the homepage</label>
+            <label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={edit.is_active} onChange={(e) => setEdit({ ...edit, is_active: e.target.checked })} className="accent-[#1f3b32]" /> Show this slide on the homepage</label>
             <button onClick={save} disabled={saving || uploading} className="btn-dark">{saving ? 'Saving…' : 'Save slide'}</button>
           </div>
         )}

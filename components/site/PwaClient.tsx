@@ -61,7 +61,7 @@ export default function PwaClient() {
       )}
       {update && (
         <div className="no-print fixed inset-x-4 bottom-4 z-[95] mx-auto flex max-w-md items-center gap-3 border border-line bg-cream p-4 shadow-xl">
-          <RefreshCw size={18} className="shrink-0 text-gold" />
+          <RefreshCw size={18} className="shrink-0 text-forest" />
           <p className="flex-1 text-sm">A new version of the site is ready.</p>
           <button className="btn-dark btn-sm" onClick={() => { update.waiting?.postMessage('SKIP_WAITING'); window.location.reload() }}>Refresh</button>
         </div>

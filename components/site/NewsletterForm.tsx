@@ -23,15 +23,15 @@ export default function NewsletterForm({ dark = false }: { dark?: boolean }) {
     setState('done')
   }
 
-  if (state === 'done') return <p role="status" className="flex items-center gap-2 text-sm text-gold"><Check size={16} /> {msg}</p>
+  if (state === 'done') return <p role="status" className={`flex items-center gap-2 text-sm ${dark ? 'text-champagne' : 'text-forest'}`}><Check size={16} /> {msg}</p>
   return (
     <form onSubmit={submit} noValidate className="relative">
       <Honeypot />
-      <div className={`flex border-b pb-2 ${error ? 'border-[#b4533f]' : 'border-gold'}`}>
-        <input name="email" type="email" autoComplete="email" aria-label="Email address" placeholder="Your email address" className={`w-full bg-transparent text-xs outline-none placeholder:text-faint ${dark ? 'text-cream' : ''}`} />
-        <button aria-label="Subscribe" disabled={state === 'sending'} className="text-gold">{state === 'sending' ? <Spinner /> : <Plus size={16} />}</button>
+      <div className={`flex border-b pb-2 ${error ? 'border-[#e58b73]' : 'border-gold'}`}>
+        <input name="email" type="email" autoComplete="email" aria-label="Email address" placeholder="Your email address" className={`w-full bg-transparent text-xs outline-none ${dark ? 'text-cream placeholder:text-[#aab5ae]' : 'placeholder:text-faint'}`} />
+        <button aria-label="Subscribe" disabled={state === 'sending'} className={dark ? 'text-champagne' : 'text-forest'}>{state === 'sending' ? <Spinner /> : <Plus size={16} />}</button>
       </div>
-      {error && <p role="alert" className="err-text">{error}</p>}
+      {error && <p role="alert" className={dark ? 'mt-1.5 text-xs text-[#f2b8a8]' : 'err-text'}>{error}</p>}
     </form>
   )
 }

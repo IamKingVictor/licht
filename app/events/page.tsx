@@ -16,7 +16,7 @@ export default function EventsPage() {
       <section className="mx-auto max-w-[1360px] px-5 py-16 lg:px-10 lg:py-24">
         <div className="grid gap-px border border-line bg-line md:grid-cols-2">
           {OCCASIONS.map((o) => (
-            <article id={o.id} key={o.id} className="scroll-mt-32 bg-cream p-8 sm:p-10">
+            <article id={o.id} key={o.id} className={`scroll-mt-32 p-8 sm:p-10 ${o.id === 'weddings' || o.id === 'baby-showers' ? 'bg-blush' : 'bg-cream'}`}>
               <h2 className="font-serif text-3xl sm:text-4xl">{o.title}</h2>
               <p className="mt-3 max-w-sm text-sm leading-6 text-muted">{o.text}</p>
               <div className="mt-6 flex flex-wrap gap-5">
@@ -30,7 +30,7 @@ export default function EventsPage() {
       <section className="border-t border-line bg-sand px-5 py-16 lg:px-10">
         <div className="mx-auto max-w-[1360px]">
           <h2 className="h2 mb-10 text-center">Your perfect gift in <em>4 simple steps</em></h2>
-          <ol className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">{STEPS.map((s) => (<li key={s.n} className="border-t border-gold-soft pt-5"><p className="font-serif text-3xl text-gold">{s.n}</p><h3 className="mt-3 text-[11px] uppercase tracking-[0.22em]">{s.title}</h3><p className="mt-2 text-sm leading-6 text-muted">{s.text}</p></li>))}</ol>
+          <ol className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">{STEPS.map((s) => (<li key={s.n} className="border-t border-gold-soft pt-5"><p className="font-serif text-3xl text-forest">{s.n}</p><h3 className="mt-3 text-[11px] uppercase tracking-[0.22em]">{s.title}</h3><p className="mt-2 text-sm leading-6 text-muted">{s.text}</p></li>))}</ol>
         </div>
       </section>
     </>

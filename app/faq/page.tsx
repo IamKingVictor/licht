@@ -16,12 +16,12 @@ export default function FaqPage() {
         <div className="divide-y divide-line border-y border-line">
           {FAQS.map((f) => (
             <details key={f.q} className="group py-5">
-              <summary className="flex cursor-pointer list-none items-center justify-between gap-6 font-serif text-xl marker:hidden [&::-webkit-details-marker]:hidden">{f.q}<ChevronDown size={18} className="shrink-0 text-gold transition-transform group-open:rotate-180" /></summary>
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-6 font-serif text-xl marker:hidden [&::-webkit-details-marker]:hidden">{f.q}<ChevronDown size={18} className="shrink-0 text-forest transition-transform group-open:rotate-180" /></summary>
               <p className="mt-3 max-w-xl text-sm leading-7 text-muted">{f.a}</p>
             </details>
           ))}
         </div>
-        <p className="mt-10 text-center text-sm text-muted">Still need help? <Link href="/contact" className="border-b border-gold text-gold">Contact us</Link> or <Link href="/quote" className="border-b border-gold text-gold">request a quote</Link>.</p>
+        <p className="mt-10 text-center text-sm text-muted">Still need help? <Link href="/contact" className="border-b border-gold text-forest">Contact us</Link> or <Link href="/quote" className="border-b border-gold text-forest">request a quote</Link>.</p>
       </section>
     </>
   )

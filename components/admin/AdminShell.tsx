@@ -31,7 +31,7 @@ export default function AdminShell({ children }: { children: ReactNode }) {
   useEffect(() => { if (!loading && !isLogin && (!user || !isAdmin)) router.replace('/admin/login') }, [loading, user, isAdmin, isLogin, router])
 
   if (isLogin) return <div className="min-h-screen bg-cream">{children}</div>
-  if (loading || !user || !isAdmin) return <div className="flex min-h-screen items-center justify-center bg-cream"><Spinner className="text-gold" /></div>
+  if (loading || !user || !isAdmin) return <div className="flex min-h-screen items-center justify-center bg-cream"><Spinner className="text-forest" /></div>
 
   const sidebar = (
     <nav aria-label="Admin" className="flex h-full flex-col bg-ink-deep text-cream">
@@ -39,12 +39,12 @@ export default function AdminShell({ children }: { children: ReactNode }) {
       <ul className="flex-1 space-y-1 overflow-y-auto px-3">
         {NAV.map(({ href, label, icon: Icon }) => {
           const on = href === '/admin' ? pathname === '/admin' : pathname.startsWith(href)
-          return <li key={href}><Link href={href} className={`flex items-center gap-3 px-3 py-3 text-[11px] uppercase tracking-[0.16em] transition-colors ${on ? 'bg-ink text-champagne' : 'text-[#c3b9ae] hover:bg-ink hover:text-cream'}`}><Icon size={16} strokeWidth={1.5} />{label}</Link></li>
+          return <li key={href}><Link href={href} className={`flex items-center gap-3 px-3 py-3 text-[11px] uppercase tracking-[0.16em] transition-colors ${on ? 'bg-ink text-champagne' : 'text-[#cfd6d1] hover:bg-ink hover:text-cream'}`}><Icon size={16} strokeWidth={1.5} />{label}</Link></li>
         })}
       </ul>
       <div className="space-y-1 border-t border-[#3a3029] p-3">
-        <Link href="/" target="_blank" className="flex items-center gap-3 px-3 py-3 text-[11px] uppercase tracking-[0.16em] text-[#c3b9ae] hover:text-cream"><ExternalLink size={16} /> View site</Link>
-        <button onClick={async () => { await signOut(); router.replace('/admin/login') }} className="flex w-full items-center gap-3 px-3 py-3 text-[11px] uppercase tracking-[0.16em] text-[#c3b9ae]"><LogOut size={16} /> Sign out</button>
+        <Link href="/" target="_blank" className="flex items-center gap-3 px-3 py-3 text-[11px] uppercase tracking-[0.16em] text-[#cfd6d1] hover:text-cream"><ExternalLink size={16} /> View site</Link>
+        <button onClick={async () => { await signOut(); router.replace('/admin/login') }} className="flex w-full items-center gap-3 px-3 py-3 text-[11px] uppercase tracking-[0.16em] text-[#cfd6d1]"><LogOut size={16} /> Sign out</button>
         <p className="truncate px-3 pt-2 text-[10px] text-[#8d8378]">{user.email}</p>
       </div>
     </nav>

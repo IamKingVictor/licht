@@ -62,8 +62,8 @@ export default function CartView() {
               <li key={line.key} className="grid grid-cols-[88px_1fr] gap-4 py-6 sm:grid-cols-[120px_1fr_auto] sm:gap-6">
                 <Link href={`/shop/${product.slug}`} className="relative aspect-[0.9] overflow-hidden bg-sand"><ProductImage src={product.images[0]} alt={product.name} sizes="120px" /></Link>
                 <div className="min-w-0">
-                  <h3 className="font-serif text-xl leading-tight"><Link href={`/shop/${product.slug}`} className="hover:text-gold">{product.name}</Link></h3>
-                  <p className="mt-1 text-xs text-gold">{product.price_is_from ? 'From ' : ''}{money(product.price)} each</p>
+                  <h3 className="font-serif text-xl leading-tight"><Link href={`/shop/${product.slug}`} className="hover:text-forest">{product.name}</Link></h3>
+                  <p className="mt-1 text-xs text-forest">{product.price_is_from ? 'From ' : ''}{money(product.price)} each</p>
                   {extras.length > 0 && <dl className="mt-2 space-y-0.5 text-xs text-muted">{extras.map(([k, v]) => <div key={k} className="flex gap-2"><dt className="shrink-0 text-faint">{k}:</dt><dd className="break-words">{v}</dd></div>)}</dl>}
                   {line.quantity < product.min_quantity && <p className="err-text">Minimum order is {product.min_quantity}.</p>}
                   <div className="mt-4 flex items-center gap-5 sm:hidden">
@@ -89,7 +89,7 @@ export default function CartView() {
         <h2 className="font-serif text-3xl">Order summary</h2>
         {settings.free_delivery_threshold > 0 && (
           <div className="mt-5">
-            <p className="flex items-center gap-2 text-xs text-muted"><Truck size={14} className="text-gold" />{toFree > 0 ? <>Add <strong className="text-ink">{money(toFree)}</strong> for free delivery</> : 'You qualify for free delivery'}</p>
+            <p className="flex items-center gap-2 text-xs text-muted"><Truck size={14} className="text-forest" />{toFree > 0 ? <>Add <strong className="text-ink">{money(toFree)}</strong> for free delivery</> : 'You qualify for free delivery'}</p>
             <div className="mt-2 h-1 bg-nude"><div className="h-1 bg-gold-soft transition-all" style={{ width: `${progress}%` }} /></div>
           </div>
         )}
@@ -104,7 +104,7 @@ export default function CartView() {
           <div className="mt-6 border border-gold-soft/50 bg-sand p-4 text-xs leading-5">
             <p className="font-medium">Ordering for a large event?</p>
             <p className="mt-1 text-muted">Request a tailored quote for bulk pricing, branding and custom packaging.</p>
-            <Link href="/quote?type=bulk" className="mt-2 inline-block border-b border-gold text-gold">Request a quote</Link>
+            <Link href="/quote?type=bulk" className="mt-2 inline-block border-b border-gold text-forest">Request a quote</Link>
           </div>
         )}
       </aside>

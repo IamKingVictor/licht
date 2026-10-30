@@ -23,7 +23,7 @@ export default function QuoteBookingTabs() {
     <div>
       <div role="tablist" aria-label="Quotes and bookings" className="mb-10 grid grid-cols-2 border border-line bg-white/40">
         {([['quote', 'Request a quotation', FileText], ['booking', 'Book a consultation', CalendarCheck]] as const).map(([k, label, Icon]) => (
-          <button key={k} role="tab" aria-selected={tab === k} id={`tab-${k}`} aria-controls={`panel-${k}`} onClick={() => setTab(k)} className={`flex items-center justify-center gap-2 rounded-full px-3 py-3.5 text-[10px] font-medium uppercase tracking-[0.16em] transition-all sm:text-[11px] ${tab === k ? 'bg-rose text-white shadow-md' : 'hover:bg-blush hover:text-rose'}`}><Icon size={15} /> {label}</button>
+          <button key={k} role="tab" aria-selected={tab === k} id={`tab-${k}`} aria-controls={`panel-${k}`} onClick={() => setTab(k)} className={`flex items-center justify-center gap-2 rounded-full px-3 py-3.5 text-[10px] font-medium uppercase tracking-[0.16em] transition-all sm:text-[11px] ${tab === k ? 'bg-forest text-white shadow-md' : 'hover:bg-mist hover:text-forest'}`}><Icon size={15} /> {label}</button>
         ))}
       </div>
       <div role="tabpanel" id={`panel-${tab}`} aria-labelledby={`tab-${tab}`}>

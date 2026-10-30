@@ -91,7 +91,7 @@ export default function CheckoutView() {
     <form onSubmit={place} noValidate className="mx-auto grid max-w-[1360px] gap-10 px-5 py-10 lg:grid-cols-[1.5fr_1fr] lg:gap-14 lg:px-10 lg:py-14">
       <div className="space-y-12">
         {serverError && <Alert kind="error" title="We could not place your order">{serverError}</Alert>}
-        {!user && <p className="text-xs text-muted">Checking out as a guest. <Link href="/account" className="border-b border-gold text-gold">Sign in</Link> to save your details and track orders in your account.</p>}
+        {!user && <p className="text-xs text-muted">Checking out as a guest. <Link href="/account" className="border-b border-gold text-forest">Sign in</Link> to save your details and track orders in your account.</p>}
 
         <section>
           <h2 className="mb-5 font-serif text-3xl">Contact</h2>
@@ -107,8 +107,8 @@ export default function CheckoutView() {
           <div className="grid gap-3 sm:grid-cols-2" role="radiogroup" aria-label="Delivery method">
             {([['delivery', 'Delivery', settings.delivery_note ? 'To your home or event venue' : 'To your door', <Truck key="t" size={18} />], ['collection', 'Collection', 'Free — collect from us by appointment', <Store key="s" size={18} />]] as const).map(([v, label, text, icon]) => (
               <label key={v} className={`flex cursor-pointer items-start gap-3 border p-4 ${method === v ? 'border-gold bg-white' : 'border-line bg-white/40'}`}>
-                <input type="radio" name="delivery_method" value={v} checked={method === v} onChange={() => setMethod(v)} className="mt-1 accent-[#9a7644]" />
-                <span className="text-gold">{icon}</span>
+                <input type="radio" name="delivery_method" value={v} checked={method === v} onChange={() => setMethod(v)} className="mt-1 accent-[#1f3b32]" />
+                <span className="text-forest">{icon}</span>
                 <span><span className="block text-sm font-medium">{label}</span><span className="block text-xs text-muted">{text}</span></span>
               </label>
             ))}
@@ -135,8 +135,8 @@ export default function CheckoutView() {
           <div className="space-y-3" role="radiogroup" aria-label="Payment method">
             {payOptions.filter((o) => !o.hidden).map((o) => (
               <label key={o.value} className={`flex cursor-pointer items-start gap-3 border p-4 ${payment === o.value ? 'border-gold bg-white' : 'border-line bg-white/40'}`}>
-                <input type="radio" name="payment" value={o.value} checked={payment === o.value} onChange={() => setPayment(o.value)} className="mt-1 accent-[#9a7644]" />
-                <span className="text-gold">{o.icon}</span>
+                <input type="radio" name="payment" value={o.value} checked={payment === o.value} onChange={() => setPayment(o.value)} className="mt-1 accent-[#1f3b32]" />
+                <span className="text-forest">{o.icon}</span>
                 <span><span className="block text-sm font-medium">{o.label}</span><span className="block text-xs leading-5 text-muted">{o.text}</span></span>
               </label>
             ))}
@@ -145,7 +145,7 @@ export default function CheckoutView() {
 
         <div data-error={errors.agree ? true : undefined}>
           <label className="flex cursor-pointer items-start gap-3 text-sm leading-6 text-muted">
-            <input type="checkbox" checked={agree} onChange={(e) => setAgree(e.target.checked)} className="mt-1.5 h-4 w-4 accent-[#9a7644]" />
+            <input type="checkbox" checked={agree} onChange={(e) => setAgree(e.target.checked)} className="mt-1.5 h-4 w-4 accent-[#1f3b32]" />
             <span>I have read and accept the <Link href="/policies/terms" target="_blank" className="border-b border-gold text-ink">terms &amp; conditions</Link>, <Link href="/policies/returns" target="_blank" className="border-b border-gold text-ink">returns policy</Link> and <Link href="/policies/privacy" target="_blank" className="border-b border-gold text-ink">privacy policy</Link>, and I have checked my personalisation details.</span>
           </label>
           {errors.agree && <p className="err-text">{errors.agree}</p>}
@@ -175,7 +175,7 @@ export default function CheckoutView() {
         </dl>
         <button disabled={submitting} className="btn-dark mt-6 w-full">{submitting ? <><Spinner /> Placing order…</> : <><Lock size={14} /> Place order · {money(totals.total)}</>}</button>
         <p className="mt-3 flex items-center justify-center gap-2 text-[11px] text-faint"><ArrowRight size={12} /> You will not be charged until payment is confirmed.</p>
-        <Link href="/cart" className="mt-4 block text-center text-[10px] uppercase tracking-[0.16em] text-muted hover:text-gold">Back to basket</Link>
+        <Link href="/cart" className="mt-4 block text-center text-[10px] uppercase tracking-[0.16em] text-muted hover:text-forest">Back to basket</Link>
       </aside>
     </form>
   )

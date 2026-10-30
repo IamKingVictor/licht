@@ -10,9 +10,9 @@ export function FormSuccess({ title, reference, queued, children, onReset, whats
   const { settings } = useStore()
   return (
     <div role="status" className="border border-line bg-white/60 p-8 text-center sm:p-12">
-      {queued ? <WifiOff className="mx-auto text-gold" size={36} strokeWidth={1.3} /> : <CheckCircle2 className="mx-auto text-gold" size={36} strokeWidth={1.3} />}
+      {queued ? <WifiOff className="mx-auto text-forest" size={36} strokeWidth={1.3} /> : <CheckCircle2 className="mx-auto text-forest" size={36} strokeWidth={1.3} />}
       <h3 className="mt-5 font-serif text-3xl sm:text-4xl">{queued ? 'Saved — we will send it when you are online' : title}</h3>
-      {reference && !queued && <p className="mt-4 text-[10px] uppercase tracking-[0.22em] text-gold">Reference <span className="ml-2 font-medium text-ink">{reference}</span></p>}
+      {reference && !queued && <p className="mt-4 text-[10px] uppercase tracking-[0.22em] text-forest">Reference <span className="ml-2 font-medium text-ink">{reference}</span></p>}
       <div className="lead mx-auto mt-4 max-w-md">{children}</div>
       <div className="mt-8 flex flex-wrap justify-center gap-4">
         {digits(settings.whatsapp_number).length >= 7 && (

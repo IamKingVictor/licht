@@ -16,8 +16,8 @@ export default function ContactDetails() {
   return (
     <ul className="divide-y divide-line border-y border-line">
       {rows.map((r) => (
-        <li key={r.label} className="flex items-start gap-4 py-4"><r.icon size={18} strokeWidth={1.4} className="mt-0.5 shrink-0 text-gold" />
-          <div><p className="text-[10px] uppercase tracking-[0.18em] text-faint">{r.label}</p>{r.href ? <a href={r.href} target={r.href.startsWith('http') ? '_blank' : undefined} rel="noopener noreferrer" className="text-sm hover:text-gold">{r.text}</a> : <p className="text-sm">{r.text}</p>}</div>
+        <li key={r.label} className="flex items-start gap-4 py-4"><r.icon size={18} strokeWidth={1.4} className="mt-0.5 shrink-0 text-forest" />
+          <div><p className="text-[10px] uppercase tracking-[0.18em] text-faint">{r.label}</p>{r.href ? <a href={r.href} target={r.href.startsWith('http') ? '_blank' : undefined} rel="noopener noreferrer" className="text-sm hover:text-forest">{r.text}</a> : <p className="text-sm">{r.text}</p>}</div>
         </li>
       ))}
     </ul>

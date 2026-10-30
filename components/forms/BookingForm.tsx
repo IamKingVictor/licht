@@ -75,7 +75,7 @@ export default function BookingForm() {
         <Field name="phone" type="tel" label="Phone / WhatsApp" required autoComplete="tel" error={errors.phone} className="sm:col-span-2" />
         <TextArea name="message" label="What would you like to discuss?" className="sm:col-span-2" placeholder="Theme, colours, ideas, deadlines…" />
       </div>
-      <p className="flex flex-wrap items-center gap-x-5 gap-y-1 text-xs text-muted"><span className="flex items-center gap-2"><Calendar size={14} className="text-gold" />Monday – Saturday</span><span className="flex items-center gap-2"><Clock size={14} className="text-gold" />Sessions last about 30 minutes</span></p>
+      <p className="flex flex-wrap items-center gap-x-5 gap-y-1 text-xs text-muted"><span className="flex items-center gap-2"><Calendar size={14} className="text-forest" />Monday – Saturday</span><span className="flex items-center gap-2"><Clock size={14} className="text-forest" />Sessions last about 30 minutes</span></p>
       {serverError && <Alert kind="error" title="We could not send your booking">{serverError}</Alert>}
       <button disabled={state === 'sending'} className="btn-dark w-full sm:w-auto">{state === 'sending' ? <><Spinner /> Sending…</> : <>Request booking <ArrowRight size={15} /></>}</button>
     </form>

@@ -32,7 +32,7 @@ insert into public.settings (key,value) values ('site', '{
   "delivery_fee": 6.95,
   "free_delivery_threshold": 75,
   "delivery_note": "Standard delivery takes 2–4 working days after your order is prepared. Personalised and bulk orders are confirmed with you individually.",
-  "contact_email": "hello@lichtsignature.com",
+  "contact_email": "info@lichtsignaturesouvenirs.store",
   "contact_phone": "+44 7000 000000",
   "whatsapp_number": "+44 7000 000000",
   "instagram_handle": "@lichtsignature",

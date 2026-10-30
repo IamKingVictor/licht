@@ -1,12 +1,12 @@
 export const OCCASIONS = [
-  { id: 'weddings', title: 'Weddings', text: 'Elegant wedding souvenirs and guest gifts.', category: 'wedding-souvenirs' },
-  { id: 'birthdays', title: 'Birthdays', text: 'Personalised gifts for children, teenagers and adults.', category: 'birthday-gifts' },
-  { id: 'anniversaries', title: 'Anniversaries', text: 'Beautiful keepsakes for couples and loved ones.', category: 'personalised-gifts' },
-  { id: 'baby-showers', title: 'Baby showers', text: 'Thoughtful gifts and souvenirs for celebrating new beginnings.', category: 'personalised-gifts' },
-  { id: 'christenings', title: 'Christenings & religious celebrations', text: 'Elegant keepsakes for meaningful occasions.', category: 'personalised-gifts' },
-  { id: 'graduations', title: 'Graduations', text: 'Celebrate achievements with memorable gifts.', category: 'birthday-gifts' },
-  { id: 'corporate', title: 'Corporate events', text: 'Professional gifts for conferences, launches, celebrations and client appreciation.', category: 'corporate-gifts' },
-  { id: 'special', title: 'Special events', text: 'We also cater for parties, celebrations and special occasions.', category: '' },
+  { id: 'weddings', image: '/images/occasions/weddings.jpg', title: 'Weddings', text: 'Elegant wedding souvenirs and guest gifts.', category: 'wedding-souvenirs' },
+  { id: 'birthdays', image: '/images/occasions/birthdays.jpg', title: 'Birthdays', text: 'Personalised gifts for children, teenagers and adults.', category: 'birthday-gifts' },
+  { id: 'anniversaries', image: '/images/occasions/anniversaries.jpg', title: 'Anniversaries', text: 'Beautiful keepsakes for couples and loved ones.', category: 'personalised-gifts' },
+  { id: 'baby-showers', image: '/images/occasions/baby-showers.jpg', title: 'Baby showers', text: 'Thoughtful gifts and souvenirs for celebrating new beginnings.', category: 'personalised-gifts' },
+  { id: 'christenings', image: '/images/occasions/christenings.jpg', title: 'Christenings & religious celebrations', text: 'Elegant keepsakes for meaningful occasions.', category: 'personalised-gifts' },
+  { id: 'graduations', image: '/images/occasions/graduations.jpg', title: 'Graduations', text: 'Celebrate achievements with memorable gifts.', category: 'birthday-gifts' },
+  { id: 'corporate', image: '/images/occasions/corporate.jpg', title: 'Corporate events', text: 'Professional gifts for conferences, launches, celebrations and client appreciation.', category: 'corporate-gifts' },
+  { id: 'special', image: '/images/occasions/special.jpg', title: 'Special events', text: 'We also cater for parties, celebrations and special occasions.', category: '' },
 ]
 
 export const USPS = [

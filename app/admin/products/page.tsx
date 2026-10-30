@@ -34,13 +34,13 @@ export default function AdminProducts() {
   return (
     <div>
       <div className="mb-6 flex gap-6 border-b border-line text-[11px] uppercase tracking-[0.16em]">
-        {(['products', 'categories'] as const).map((t) => <button key={t} onClick={() => setTab(t)} className={`-mb-px border-b-2 pb-3 ${tab === t ? 'border-gold text-gold' : 'border-transparent text-muted'}`}>{t}</button>)}
+        {(['products', 'categories'] as const).map((t) => <button key={t} onClick={() => setTab(t)} className={`-mb-px border-b-2 pb-3 ${tab === t ? 'border-gold text-forest' : 'border-transparent text-muted'}`}>{t}</button>)}
       </div>
 
       {tab === 'products' ? (
         <>
           <Toolbar>
-            <div className="flex min-w-[220px] flex-1 items-center gap-2 border border-line bg-white/60 px-4 py-3"><Search size={15} className="text-gold" /><input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search products" aria-label="Search products" className="w-full bg-transparent text-sm outline-none" /></div>
+            <div className="flex min-w-[220px] flex-1 items-center gap-2 border border-line bg-white/60 px-4 py-3"><Search size={15} className="text-forest" /><input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search products" aria-label="Search products" className="w-full bg-transparent text-sm outline-none" /></div>
             <button onClick={() => setEditing(blankProduct(products.rows.length + 1))} className="btn-dark btn-sm"><Plus size={14} /> Add product</button>
           </Toolbar>
           <Panel>
@@ -78,7 +78,7 @@ export default function AdminProducts() {
             <TextArea label="Description" rows={3} value={cat.description} onChange={(e) => setCat({ ...cat, description: e.target.value })} />
             <Field label="Image URL" value={cat.image_url ?? ''} onChange={(e) => setCat({ ...cat, image_url: e.target.value || null })} hint="Path or full URL; upload images via a product and copy its URL" />
             <Field label="Sort order" type="number" value={cat.sort_order} onChange={(e) => setCat({ ...cat, sort_order: Number(e.target.value) })} />
-            <label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={cat.is_active} onChange={(e) => setCat({ ...cat, is_active: e.target.checked })} className="accent-[#9a7644]" /> Visible</label>
+            <label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={cat.is_active} onChange={(e) => setCat({ ...cat, is_active: e.target.checked })} className="accent-[#1f3b32]" /> Visible</label>
             <button onClick={saveCategory} className="btn-dark">Save category</button>
           </div>
         )}

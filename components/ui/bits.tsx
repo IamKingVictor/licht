@@ -4,13 +4,13 @@ import { ArrowRight, Star } from 'lucide-react'
 
 export function SectionHead({ eyebrow, title, em, action, center = false, light = false }: { eyebrow?: string; title: string; em?: string; action?: { href: string; label: string }; center?: boolean; light?: boolean }) {
   return (
-    <div className={`mb-9 flex items-end justify-between gap-6 ${center ? 'flex-col items-center text-center' : ''}`}>
+    <div className={`mb-6 flex items-end justify-between gap-6 sm:mb-9 ${center ? 'flex-col items-center text-center' : ''}`}>
       <div>
-        {eyebrow && <p className={`mb-3 text-[10px] uppercase tracking-[0.3em] ${light ? 'text-champagne' : 'text-gold'}`}>{eyebrow}</p>}
+        {eyebrow && <p className={`mb-3 text-[10px] uppercase tracking-[0.2em] ${light ? 'text-champagne' : 'text-forest'}`}>{eyebrow}</p>}
         <h2 className="h2">{title} {em && <em className={light ? 'text-champagne' : ''}>{em}</em>}</h2>
       </div>
       {action && (
-        <Link href={action.href} className="group hidden shrink-0 items-center gap-2 rounded-full border border-line bg-white/70 px-4 py-2 text-[10px] font-medium uppercase tracking-[0.17em] transition-all hover:-translate-y-0.5 hover:border-rose hover:text-rose sm:flex">{action.label} <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" /></Link>
+        <Link href={action.href} className="group hidden shrink-0 items-center gap-2 rounded-full border border-line bg-white/70 px-4 py-2 text-[10px] font-medium uppercase tracking-[0.17em] transition-all hover:-translate-y-0.5 hover:border-forest hover:text-forest sm:flex">{action.label} <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" /></Link>
       )}
     </div>
   )
@@ -22,12 +22,12 @@ export function PageHero({ eyebrow, title, em, text, children, crumbs }: { eyebr
       <div className="mx-auto max-w-[1360px]">
         {crumbs && (
           <nav aria-label="Breadcrumb" className="mb-6 flex flex-wrap items-center gap-2 text-[10px] uppercase tracking-[0.16em] text-muted">
-            <Link href="/" className="hover:text-gold">Home</Link>
-            {crumbs.map((c) => (<span key={c.label} className="flex items-center gap-2"><span>/</span>{c.href ? <Link href={c.href} className="hover:text-gold">{c.label}</Link> : <span className="text-ink">{c.label}</span>}</span>))}
+            <Link href="/" className="hover:text-forest">Home</Link>
+            {crumbs.map((c) => (<span key={c.label} className="flex items-center gap-2"><span>/</span>{c.href ? <Link href={c.href} className="hover:text-forest">{c.label}</Link> : <span className="text-ink">{c.label}</span>}</span>))}
           </nav>
         )}
-        {eyebrow && <p className="mb-4 flex items-center gap-3 text-[10px] uppercase tracking-[0.3em] text-gold"><span className="h-px w-8 bg-gold-soft" />{eyebrow}</p>}
-        <h1 className="h1 max-w-3xl font-serif text-[44px] leading-[1] tracking-[-0.035em] sm:text-6xl lg:text-7xl">{title} {em && <em className="font-light text-gold">{em}</em>}</h1>
+        {eyebrow && <p className="mb-4 flex items-center gap-3 text-[10px] uppercase tracking-[0.2em] text-forest"><span className="h-px w-8 bg-gold-soft" />{eyebrow}</p>}
+        <h1 className="h1 max-w-3xl font-serif text-[44px] leading-[1] tracking-[-0.035em] sm:text-6xl lg:text-7xl">{title} {em && <em className="text-forest">{em}</em>}</h1>
         {text && <p className="lead mt-6 max-w-xl">{text}</p>}
         {children && <div className="mt-8 flex flex-wrap items-center gap-5">{children}</div>}
       </div>
@@ -59,7 +59,7 @@ export function EmptyState({ title, text, action }: { title: string; text?: stri
 
 export function CheckList({ items, light = false }: { items: string[]; light?: boolean }) {
   return (
-    <ul className={`grid gap-x-8 gap-y-3 text-sm sm:grid-cols-2 ${light ? 'text-[#c3b9ae]' : 'text-muted'}`}>
+    <ul className={`grid gap-x-8 gap-y-3 text-sm sm:grid-cols-2 ${light ? 'text-[#cfd6d1]' : 'text-muted'}`}>
       {items.map((i) => (<li key={i} className="flex items-center gap-3 border-b border-line/60 pb-3"><span className="h-1.5 w-1.5 shrink-0 rounded-full bg-gold-soft" />{i}</li>))}
     </ul>
   )

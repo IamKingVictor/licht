@@ -86,12 +86,17 @@ export default function Header() {
   return (
     <>
       {settings.announcement && (
-        <div className="announce px-4 py-2 text-center text-[10px] font-medium uppercase leading-5 tracking-[0.25em] text-[#fff1d6]">
-          {settings.announcement}
+        <div className="announce px-4 py-1.5 text-center text-[10px] font-medium uppercase leading-5 tracking-[0.06em] text-cream sm:py-2 sm:text-[11px] sm:tracking-[0.12em]">
+          <span className="sm:hidden">
+            {settings.free_delivery_threshold > 0
+              ? `Free delivery over ${settings.currency}${settings.free_delivery_threshold}`
+              : settings.announcement}
+          </span>
+          <span className="hidden sm:inline">{settings.announcement}</span>
         </div>
       )}
-      <header className="sticky top-0 z-40 border-b border-line bg-cream/90 shadow-[0_6px_24px_-14px_rgba(156,58,94,0.35)] backdrop-blur-md">
-        <div className="mx-auto flex max-w-[1360px] items-center justify-between gap-4 px-5 py-4 lg:px-10 lg:py-5">
+      <header className="sticky top-0 z-40 border-b border-line bg-cream/90 shadow-[0_6px_24px_-16px_rgba(31,59,50,0.3)] backdrop-blur-md">
+        <div className="mx-auto flex max-w-[1360px] items-center justify-between gap-4 px-5 py-3 lg:px-10 lg:py-3">
           <button
             aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
@@ -103,20 +108,22 @@ export default function Header() {
           <Logo className="text-center xl:text-left" />
           <nav
             aria-label="Main"
-            className="hidden items-center gap-6 text-[10px] uppercase tracking-[0.18em] xl:flex"
+            className="hidden items-center gap-5 whitespace-nowrap text-[11px] font-medium uppercase tracking-[0.09em] xl:flex 2xl:gap-7"
           >
             {NAV_LINKS.map((l) => (
               <Link
                 key={l.href}
                 href={l.href}
-                className={`transition-colors hover:text-gold ${pathname.startsWith(l.href) ? "text-gold" : ""}`}
+                aria-current={pathname === l.href || pathname.startsWith(l.href + "/") ? "page" : undefined}
+                className="nav-link"
               >
                 {l.label}
               </Link>
             ))}
             <Link
               href="/contact"
-              className={`transition-colors hover:text-gold ${pathname === "/contact" ? "text-gold" : ""}`}
+              aria-current={pathname === "/contact" ? "page" : undefined}
+              className="nav-link"
             >
               Contact us
             </Link>
@@ -132,11 +139,11 @@ export default function Header() {
             <Link
               href="/wishlist"
               aria-label={`Wishlist, ${slugs.length} saved`}
-              className="relative hidden rounded-full p-2 transition-all hover:scale-110 hover:bg-blush hover:text-rose sm:block"
+              className="relative hidden rounded-full p-2 transition-all hover:scale-110 hover:bg-mist hover:text-forest sm:block"
             >
               <Heart size={18} strokeWidth={1.5} />
               {slugs.length > 0 && (
-                <span className="absolute right-0 top-0 flex h-4 w-4 items-center justify-center rounded-full bg-rose text-[9px] text-white">
+                <span className="absolute right-0 top-0 flex h-4 w-4 items-center justify-center rounded-full bg-forest text-[9px] text-white">
                   {slugs.length}
                 </span>
               )}
@@ -144,27 +151,21 @@ export default function Header() {
             <Link
               href="/account"
               aria-label={user ? "My account" : "Sign in"}
-              className="hidden rounded-full p-2 transition-all hover:scale-110 hover:bg-blush hover:text-rose sm:block"
+              className="hidden rounded-full p-2 transition-all hover:scale-110 hover:bg-mist hover:text-forest sm:block"
             >
               <User size={18} strokeWidth={1.5} />
             </Link>
             <Link
               href="/cart"
               aria-label={`Shopping basket, ${count} items`}
-              className="relative rounded-full p-2 transition-all hover:scale-110 hover:bg-blush hover:text-rose"
+              className="relative rounded-full p-2 transition-all hover:scale-110 hover:bg-mist hover:text-forest"
             >
               <ShoppingBag size={19} strokeWidth={1.5} />
               {count > 0 && (
-                <span className="absolute right-0 top-0 flex h-4 min-w-4 items-center justify-center rounded-full bg-rose px-1 text-[9px] text-white">
+                <span className="absolute right-0 top-0 flex h-4 min-w-4 items-center justify-center rounded-full bg-forest px-1 text-[9px] text-white">
                   {count}
                 </span>
               )}
-            </Link>
-            <Link
-              href="/shop"
-              className="btn-shop btn-sm ml-1 hidden lg:inline-flex"
-            >
-              Shop now
             </Link>
           </div>
         </div>
@@ -205,7 +206,7 @@ export default function Header() {
                         className="flex items-center justify-between gap-4 px-4 py-3 text-sm hover:bg-sand"
                       >
                         <span>{p.name}</span>
-                        <span className="text-xs text-gold">
+                        <span className="text-xs text-forest">
                           {p.price_is_from ? "From " : ""}
                           {money(p.price)}
                         </span>
@@ -237,14 +238,15 @@ export default function Header() {
             onClick={() => setOpen(false)}
           />
           <nav className="absolute inset-y-0 left-0 flex w-[86%] max-w-sm flex-col overflow-y-auto bg-cream px-6 pb-8 pt-24 shadow-2xl animate-in slide-in-from-left duration-200">
-            <ul className="divide-y divide-line text-[11px] uppercase tracking-[0.18em]">
+            <ul className="divide-y divide-line text-[12px] font-medium uppercase tracking-[0.09em]">
               {MOBILE_LINKS.map((l) => (
                 <li key={l.href}>
                   <Link
                     href={l.href}
-                    className={`flex items-center justify-between py-4 ${pathname === l.href ? "text-gold" : ""}`}
+                    aria-current={pathname === l.href ? "page" : undefined}
+                    className="flex items-center justify-between py-4"
                   >
-                    {l.label}
+                    <span className={`border-b-2 pb-0.5 ${pathname === l.href ? "border-gold" : "border-transparent"}`}>{l.label}</span>
                     <ArrowRight size={14} className="text-gold" />
                   </Link>
                 </li>
@@ -258,9 +260,6 @@ export default function Header() {
                 <Heart size={14} /> Wishlist
               </Link>
             </div>
-            <Link href="/shop" className="btn-dark mt-3">
-              Shop now <ArrowRight size={15} />
-            </Link>
           </nav>
         </div>
       )}

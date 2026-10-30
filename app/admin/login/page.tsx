@@ -26,7 +26,7 @@ export default function AdminLogin() {
 
   return (
     <div className="mx-auto flex min-h-screen max-w-md flex-col justify-center px-5 py-12">
-      <Link href="/" className="mb-10 block text-center"><span className="block font-serif text-3xl tracking-[0.23em]">LICHT</span><span className="mt-1 block text-[9px] tracking-[0.39em] text-gold">SIGNATURE SOUVENIRS</span></Link>
+      <Link href="/" className="mb-10 block text-center"><span className="block font-serif text-3xl tracking-[0.23em]">LICHT</span><span className="mt-1 block text-[9px] tracking-[0.39em] text-forest">SIGNATURE SOUVENIRS</span></Link>
       <form onSubmit={submit} className="space-y-5 border border-line bg-white/60 p-8" noValidate>
         <h1 className="font-serif text-3xl">Admin sign in</h1>
         <Field name="email" type="email" label="Email" required autoComplete="email" defaultValue={HAS_SUPABASE ? '' : DEMO_ADMIN.email} />

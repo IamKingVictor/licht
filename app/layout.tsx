@@ -1,6 +1,6 @@
 import { Analytics } from '@vercel/analytics/next'
 import Script from 'next/script'
-import { Cormorant_Garamond, Inter } from 'next/font/google'
+import { Inter, Playfair_Display } from 'next/font/google'
 import type { Metadata, Viewport } from 'next'
 import './globals.css'
 import Providers from '@/components/Providers'
@@ -9,7 +9,7 @@ import PwaClient from '@/components/site/PwaClient'
 import { GA_ID, SITE } from '@/lib/config'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' })
-const cormorant = Cormorant_Garamond({ subsets: ['latin'], variable: '--font-cormorant', display: 'swap' })
+const playfair = Playfair_Display({ subsets: ['latin'], variable: '--font-display', style: ['normal', 'italic'], display: 'swap' })
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
@@ -30,14 +30,14 @@ export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   viewportFit: 'cover',
-  themeColor: '#28231f',
+  themeColor: '#1f3b32',
 }
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en-GB">
-      <body className={`${inter.variable} ${cormorant.variable} antialiased`}>
-        <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[200] focus:bg-ink focus:px-4 focus:py-3 focus:text-xs focus:text-white">Skip to content</a>
+      <body className={`${inter.variable} ${playfair.variable} antialiased`}>
+        <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[200] focus:bg-forest focus:px-4 focus:py-3 focus:text-xs focus:text-white">Skip to content</a>
         <Providers>
           <SiteChrome>{children}</SiteChrome>
           <PwaClient />

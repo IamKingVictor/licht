@@ -41,7 +41,7 @@ export default function Dashboard() {
         <Panel title="Recent orders" action={<Link href="/admin/orders" className="link-line">View all</Link>}>
           {data.orders.length === 0 ? <Loading empty="No orders yet." /> : (
             <div className="overflow-x-auto"><table className="w-full"><thead><tr className="border-b border-line"><th className={th}>Order</th><th className={th}>Customer</th><th className={th}>Total</th><th className={th}>Status</th><th className={th}>Date</th></tr></thead>
-              <tbody className="divide-y divide-line">{data.orders.slice(0, 6).map((o) => (<tr key={o.id}><td className={td}><Link href="/admin/orders" className="font-medium hover:text-gold">{o.order_number}</Link></td><td className={td}>{o.customer_name}</td><td className={td}>{money(o.total)}</td><td className={td}><Pill value={o.status} /></td><td className={td}>{formatDate(o.created_at)}</td></tr>))}</tbody></table></div>
+              <tbody className="divide-y divide-line">{data.orders.slice(0, 6).map((o) => (<tr key={o.id}><td className={td}><Link href="/admin/orders" className="font-medium hover:text-forest">{o.order_number}</Link></td><td className={td}>{o.customer_name}</td><td className={td}>{money(o.total)}</td><td className={td}><Pill value={o.status} /></td><td className={td}>{formatDate(o.created_at)}</td></tr>))}</tbody></table></div>
           )}
         </Panel>
         <Panel title="Stock alerts">

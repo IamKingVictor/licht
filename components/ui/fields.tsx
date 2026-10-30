@@ -8,7 +8,7 @@ export function Field({ label, error, hint, className = '', id, ...rest }: Commo
   const fid = id || `f-${rest.name}`
   return (
     <div className={className}>
-      <label htmlFor={fid} className="lbl">{label}{rest.required && <span className="text-gold"> *</span>}</label>
+      <label htmlFor={fid} className="lbl">{label}{rest.required && <span className="text-forest"> *</span>}</label>
       <input id={fid} aria-invalid={!!error} aria-describedby={error ? `${fid}-e` : undefined} className={`field ${error ? 'field-err' : ''}`} {...rest} />
       {hint && !error && <p className="mt-1.5 text-xs text-faint">{hint}</p>}
       {error && <p id={`${fid}-e`} className="err-text">{error}</p>}
@@ -20,7 +20,7 @@ export function TextArea({ label, error, hint, className = '', id, ...rest }: Co
   const fid = id || `f-${rest.name}`
   return (
     <div className={className}>
-      <label htmlFor={fid} className="lbl">{label}{rest.required && <span className="text-gold"> *</span>}</label>
+      <label htmlFor={fid} className="lbl">{label}{rest.required && <span className="text-forest"> *</span>}</label>
       <textarea id={fid} rows={4} aria-invalid={!!error} aria-describedby={error ? `${fid}-e` : undefined} className={`field resize-y ${error ? 'field-err' : ''}`} {...rest} />
       {hint && !error && <p className="mt-1.5 text-xs text-faint">{hint}</p>}
       {error && <p id={`${fid}-e`} className="err-text">{error}</p>}
@@ -32,7 +32,7 @@ export function Select({ label, error, hint, className = '', id, options, placeh
   const fid = id || `f-${rest.name}`
   return (
     <div className={className}>
-      <label htmlFor={fid} className="lbl">{label}{rest.required && <span className="text-gold"> *</span>}</label>
+      <label htmlFor={fid} className="lbl">{label}{rest.required && <span className="text-forest"> *</span>}</label>
       <select id={fid} aria-invalid={!!error} className={`field appearance-none bg-[url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%228%22 fill=%22none%22 stroke=%22%239a7644%22 stroke-width=%221.5%22><path d=%22M1 1l5 5 5-5%22/></svg>')] bg-[length:12px] bg-[right_1rem_center] bg-no-repeat pr-10 ${error ? 'field-err' : ''}`} {...rest}>
         {placeholder !== undefined && <option value="">{placeholder}</option>}
         {options.map((o) => {
