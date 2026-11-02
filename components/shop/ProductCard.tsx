@@ -1,23 +1,34 @@
 'use client'
+import { useCurrency } from '@/lib/currency'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Heart } from 'lucide-react'
 import type { Product } from '@/lib/types'
-import { money } from '@/lib/format'
+
 import { useCart } from '@/lib/cart'
 import { useWishlist } from '@/lib/wishlist'
 import { useRouter } from 'next/navigation'
 
 export function ProductImage({ src, alt, sizes, priority, className = '' }: { src?: string | null; alt: string; sizes: string; priority?: boolean; className?: string }) {
   const [broken, setBroken] = useState(false)
+  const [loaded, setLoaded] = useState(false)
+  const ref = useRef<HTMLImageElement>(null)
+  // a cached image can finish loading before React attaches onLoad, so check once on mount
+  useEffect(() => { if (ref.current?.complete && ref.current.naturalWidth > 0) setLoaded(true) }, [src])
   if (!src || broken) {
     return <div className="absolute inset-0 flex items-center justify-center bg-nude"><span className="font-serif text-xl tracking-[0.15em] text-forest">LICHT</span></div>
   }
-  return <Image src={src} alt={alt} fill priority={priority} sizes={sizes} onError={() => setBroken(true)} className={`object-cover ${className}`} />
+  return (
+    <>
+      {!loaded && <div aria-hidden className="absolute inset-0 animate-pulse bg-nude/70" />}
+      <Image ref={ref} src={src} alt={alt} fill priority={priority} sizes={sizes} onLoad={() => setLoaded(true)} onError={() => setBroken(true)} className={`object-cover transition-opacity duration-500 ${loaded ? 'opacity-100' : 'opacity-0'} ${className}`} />
+    </>
+  )
 }
 
 export default function ProductCard({ product, priority }: { product: Product; priority?: boolean }) {
+  const { format: fmt } = useCurrency()
   const { add } = useCart()
   const { has, toggle } = useWishlist()
   const router = useRouter()
@@ -49,7 +60,7 @@ export default function ProductCard({ product, priority }: { product: Product; p
       <div className="pt-2.5">
         <h3 className="line-clamp-1 font-serif text-[17px] leading-tight sm:text-lg"><Link href={`/shop/${product.slug}`} className="transition-colors hover:text-forest">{product.name}</Link></h3>
         <p className="mt-0.5 line-clamp-1 text-[11px] leading-4 text-[#7d746b]">{product.short_description}</p>
-        <p className="mt-1 flex items-center justify-between gap-2 text-[12px] font-medium text-forest"><span>{product.price_is_from ? 'From ' : ''}{money(product.price)}</span>{product.is_personalisable && <span className="text-[9px] font-normal uppercase tracking-[0.12em]">Personalisable</span>}</p>
+        <p className="mt-1 flex items-center justify-between gap-2 text-[12px] font-medium text-forest"><span>{product.price_is_from ? 'From ' : ''}{fmt(product.price)}</span>{product.is_personalisable && <span className="text-[9px] font-normal uppercase tracking-[0.12em]">Personalisable</span>}</p>
       </div>
       <button onClick={quickAdd} disabled={soldOut} className="btn-quick-m mt-2 w-full md:hidden">{soldOut ? 'Sold out' : needsOptions ? 'Personalise & add' : 'Add to cart'}</button>
     </article>

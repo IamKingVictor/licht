@@ -2,7 +2,7 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react'
 import { api, flushOutbox } from './db'
 import { HAS_SUPABASE } from './config'
-import { setCurrency } from './format'
+import { setRates } from './currency'
 import { seedCategories, seedProducts, seedSettings, seedSlides } from './seed'
 import type { Category, HeroSlide, Product, SiteSettings } from './types'
 
@@ -36,7 +36,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   const [error, setError] = useState<string | null>(null)
 
   const apply = useCallback((d: { categories: Category[]; products: Product[]; settings: SiteSettings; slides?: HeroSlide[] }) => {
-    setCurrency(d.settings.currency)
+    setRates(d.settings)
     setCategories(d.categories)
     setProducts(d.products)
     setSettings(d.settings)

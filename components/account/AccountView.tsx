@@ -1,11 +1,12 @@
 'use client'
+import { useCurrency } from '@/lib/currency'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { LogOut, Package, ShieldCheck, User } from 'lucide-react'
 import { useAuth, DEMO_ADMIN } from '@/lib/auth'
 import { HAS_SUPABASE } from '@/lib/config'
 import { api } from '@/lib/db'
-import { formatDate, humanise, isEmail, money } from '@/lib/format'
+import { formatDate, humanise, isEmail } from '@/lib/format'
 import type { Order } from '@/lib/types'
 import { Alert, Field, Spinner } from '@/components/ui/fields'
 import { Skeleton } from '@/components/ui/bits'
@@ -76,6 +77,7 @@ function AuthForms() {
 }
 
 function Dashboard() {
+  const { format: fmt } = useCurrency()
   const { user, signOut, updateProfile, isAdmin } = useAuth()
   const toast = useToast()
   const [orders, setOrders] = useState<Order[] | null>(null)
@@ -106,7 +108,7 @@ function Dashboard() {
             {orders.map((o) => (
               <li key={o.id} className="flex flex-wrap items-center justify-between gap-3 py-5">
                 <div><p className="font-medium tracking-wide">{o.order_number}</p><p className="text-xs text-muted">{formatDate(o.created_at)} · {humanise(o.status)}</p></div>
-                <div className="flex items-center gap-5"><p className="font-serif text-xl">{money(o.total)}</p>
+                <div className="flex items-center gap-5"><p className="font-serif text-xl">{fmt(o.total)}</p>
                   <button className="link-line" onClick={() => { sessionStorage.setItem('licht:last-order', JSON.stringify({ number: o.order_number, email: o.email })); window.location.href = `/order/${o.order_number}` }}>View</button></div>
               </li>
             ))}

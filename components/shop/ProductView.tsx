@@ -1,4 +1,5 @@
 'use client'
+import { useCurrency } from '@/lib/currency'
 import Link from 'next/link'
 import { useEffect, useMemo, useState } from 'react'
 import { Heart, Minus, Plus, Truck, Clock, ShieldCheck } from 'lucide-react'
@@ -6,7 +7,7 @@ import { useStore } from '@/lib/store'
 import { useCart } from '@/lib/cart'
 import { useWishlist } from '@/lib/wishlist'
 import { api } from '@/lib/db'
-import { money, formatDate } from '@/lib/format'
+import { formatDate } from '@/lib/format'
 import type { Product, Review } from '@/lib/types'
 import { Field, TextArea } from '@/components/ui/fields'
 import { EmptyState, SectionHead, Skeleton, Stars } from '@/components/ui/bits'
@@ -24,6 +25,7 @@ export default function ProductView({ slug }: { slug: string }) {
 }
 
 function Detail({ product, related, settings }: { product: Product; related: Product[]; settings: ReturnType<typeof useStore>['settings'] }) {
+  const { format: fmt, formatRound: fmtRound } = useCurrency()
   const { add } = useCart()
   const { has, toggle } = useWishlist()
   const { categories } = useStore()
@@ -80,7 +82,7 @@ function Detail({ product, related, settings }: { product: Product; related: Pro
             {product.is_bestseller && <p className="eyebrow mb-3">Bestseller</p>}
             <h1 className="font-serif text-4xl leading-[1.02] tracking-[-0.03em] sm:text-5xl">{product.name}</h1>
             {reviews.length > 0 && <a href="#reviews" className="mt-3 flex items-center gap-2 text-xs text-muted"><Stars value={avg} /> {avg.toFixed(1)} ({reviews.length})</a>}
-            <p className="mt-4 font-serif text-3xl text-forest">{product.price_is_from ? <span className="mr-1 text-base font-sans text-muted">From</span> : null}{money(product.price)}</p>
+            <p className="mt-4 font-serif text-3xl text-forest">{product.price_is_from ? <span className="mr-1 text-base font-sans text-muted">From</span> : null}{fmt(product.price)}</p>
             <p className="mt-5 text-[15px] leading-7 text-muted">{product.description || product.short_description}</p>
 
             {product.is_personalisable && (
@@ -101,7 +103,7 @@ function Detail({ product, related, settings }: { product: Product; related: Pro
                 <input aria-label="Quantity" inputMode="numeric" value={qty} onChange={(e) => setQty(Math.min(maxQty, Math.max(1, Number(e.target.value.replace(/\D/g, '')) || 1)))} onBlur={() => setQty(Math.max(product.min_quantity, qty))} className="w-14 bg-transparent text-center text-sm outline-none" />
                 <button aria-label="Increase quantity" onClick={() => setQty(Math.min(maxQty, qty + (product.min_quantity > 10 ? 5 : 1)))} className="p-3.5"><Plus size={14} /></button>
               </div>
-              <button onClick={() => addToCart()} disabled={soldOut} className="btn-dark flex-1 sm:flex-none sm:px-10">{soldOut ? 'Sold out' : `Add to cart · ${money(product.price * qty)}`}</button>
+              <button onClick={() => addToCart()} disabled={soldOut} className="btn-dark flex-1 sm:flex-none sm:px-10">{soldOut ? 'Sold out' : `Add to cart · ${fmt(product.price * qty)}`}</button>
               <button aria-label={has(product.slug) ? 'Remove from wishlist' : 'Add to wishlist'} aria-pressed={has(product.slug)} onClick={() => toggle(product.slug, product.name)} className="rounded-full border border-line p-3.5 transition-all hover:scale-105 hover:border-forest hover:bg-mist"><Heart size={16} strokeWidth={1.5} fill={has(product.slug) ? '#1f3b32' : 'none'} className={has(product.slug) ? 'text-forest' : ''} /></button>
             </div>
             {errors.qty && <p className="err-text">{errors.qty}</p>}
@@ -111,7 +113,7 @@ function Detail({ product, related, settings }: { product: Product; related: Pro
 
             <ul className="mt-9 space-y-3 border-t border-line pt-6 text-xs text-muted">
               <li className="flex items-center gap-3"><Clock size={16} className="text-forest" /> Usually prepared in {product.lead_time_days} working days</li>
-              <li className="flex items-center gap-3"><Truck size={16} className="text-forest" /> {settings.free_delivery_threshold > 0 ? `Free delivery over ${money(settings.free_delivery_threshold)}` : 'Delivery or collection available'}</li>
+              <li className="flex items-center gap-3"><Truck size={16} className="text-forest" /> {settings.free_delivery_threshold > 0 ? `Free delivery over ${fmtRound(settings.free_delivery_threshold)}` : 'Delivery or collection available'}</li>
               <li className="flex items-center gap-3"><ShieldCheck size={16} className="text-forest" /> Presented in premium gift packaging</li>
             </ul>
           </div>

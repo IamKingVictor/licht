@@ -12,7 +12,7 @@ export default function AboutPage() {
     <>
       <PageHero eyebrow="About LICHT SIGNATURE" title="More than a gift." em="It’s a memory." text="Every important moment deserves to be remembered." crumbs={[{ label: 'About us' }]} />
       <section className="mx-auto grid max-w-[1180px] items-center gap-12 px-5 py-16 md:grid-cols-2 lg:px-10 lg:py-24">
-        <div className="relative aspect-[0.9] overflow-hidden"><Image src="/images/products/decorative-mirror.jpg" alt="Ornate gold decorative mirror above a marble bathroom vanity" fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" /></div>
+        <div className="relative aspect-[0.9] overflow-hidden"><Image src="/images/occasions/special.jpg" alt="A premium gift box with a candle and satin ribbon" fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" /></div>
         <div className="space-y-5 text-[15px] leading-7 text-muted">
           <h2 className="h2 text-ink">Our <em>story</em></h2>
           <p>LICHT SIGNATURE SOUVENIRS is a premium gifting and souvenir brand offering carefully selected and beautifully presented gifts and keepsakes for life&apos;s special moments.</p>

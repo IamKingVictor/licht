@@ -1,11 +1,12 @@
 'use client'
+import { useCurrency } from '@/lib/currency'
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import { Check, MessageCircle, Printer, Search } from 'lucide-react'
 import { api } from '@/lib/db'
 import { useStore } from '@/lib/store'
 import { useSearchParams } from 'next/navigation'
-import { digits, formatDate, humanise, money, whatsappLink } from '@/lib/format'
+import { digits, formatDate, humanise, whatsappLink } from '@/lib/format'
 import type { Order } from '@/lib/types'
 import { Alert, Field, Spinner } from '@/components/ui/fields'
 import { personalisationText } from './CartView'
@@ -63,6 +64,7 @@ export default function OrderTracker({ initialNumber = '' }: { initialNumber?: s
 }
 
 function OrderDetails({ order, isNew, emailed }: { order: Order; isNew: boolean; emailed: boolean }) {
+  const { format: fmt, formatBase: fmtBase, code } = useCurrency()
   const { settings, bySlug } = useStore()
   const cancelled = order.status === 'cancelled'
   const step = FLOW.indexOf(order.status as (typeof FLOW)[number])
@@ -112,11 +114,11 @@ function OrderDetails({ order, isNew, emailed }: { order: Order; isNew: boolean;
             <div><dt className="text-[10px] uppercase tracking-[0.16em] text-faint">Account number</dt><dd>{settings.bank_account_number}</dd></div>
             <div className="sm:col-span-2"><dt className="text-[10px] uppercase tracking-[0.16em] text-faint">Payment reference</dt><dd className="font-medium">{order.order_number}</dd></div>
           </dl>
-          <p className="mt-4 text-sm">Amount due: <strong>{money(order.total)}</strong></p>
+          <p className="mt-4 text-sm">Amount due: <strong>{fmt(order.total)}</strong>{code !== 'USD' && <span className="text-muted"> (charged as {fmtBase(order.total)} USD)</span>}</p>
         </div>
       )}
       {pending && order.payment_method === 'card_link' && <div className="mb-10"><Alert kind="info" title="Card payment">{settings.card_payment_note}</Alert></div>}
-      {pending && order.payment_method === 'pay_on_collection' && <div className="mb-10"><Alert kind="info" title="Pay on collection">Please pay {money(order.total)} when you collect. We will contact you to arrange a time.</Alert></div>}
+      {pending && order.payment_method === 'pay_on_collection' && <div className="mb-10"><Alert kind="info" title="Pay on collection">Please pay {fmt(order.total)} when you collect. We will contact you to arrange a time.</Alert></div>}
 
       <div className="grid gap-10 md:grid-cols-[1.4fr_1fr]">
         <section>
@@ -126,14 +128,14 @@ function OrderDetails({ order, isNew, emailed }: { order: Order; isNew: boolean;
               <li key={i.id} className="flex justify-between gap-4 py-4 text-sm">
                 <div><p className="font-medium">{i.product_name} <span className="text-muted">× {i.quantity}</span></p>
                   {personalisationText(bySlug(i.product_slug), i.personalisation ?? {}).map(([k, v]) => <p key={k} className="text-xs text-muted">{k}: {v}</p>)}</div>
-                <p>{money(i.line_total)}</p>
+                <p>{fmt(i.line_total)}</p>
               </li>
             ))}
           </ul>
           <dl className="mt-4 space-y-2 text-sm">
-            <div className="flex justify-between"><dt className="text-muted">Subtotal</dt><dd>{money(order.subtotal)}</dd></div>
-            <div className="flex justify-between"><dt className="text-muted">Delivery</dt><dd>{order.delivery_fee ? money(order.delivery_fee) : 'Free'}</dd></div>
-            <div className="flex justify-between border-t border-line pt-3 font-serif text-2xl"><dt>Total</dt><dd>{money(order.total)}</dd></div>
+            <div className="flex justify-between"><dt className="text-muted">Subtotal</dt><dd>{fmt(order.subtotal)}</dd></div>
+            <div className="flex justify-between"><dt className="text-muted">Delivery</dt><dd>{order.delivery_fee ? fmt(order.delivery_fee) : 'Free'}</dd></div>
+            <div className="flex justify-between border-t border-line pt-3 font-serif text-2xl"><dt>Total</dt><dd>{fmt(order.total)}</dd></div>
           </dl>
         </section>
         <section className="space-y-6 text-sm">

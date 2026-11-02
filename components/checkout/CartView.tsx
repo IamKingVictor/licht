@@ -1,11 +1,12 @@
 'use client'
+import { useCurrency } from '@/lib/currency'
 import Link from 'next/link'
 import { useMemo } from 'react'
 import { ArrowRight, Minus, Plus, Trash2, Truck } from 'lucide-react'
 import { useCart } from '@/lib/cart'
 import { useStore } from '@/lib/store'
 import { computeTotals } from '@/lib/pricing'
-import { money } from '@/lib/format'
+
 import { EmptyState, Skeleton } from '@/components/ui/bits'
 import { ProductImage } from '@/components/shop/ProductCard'
 import type { Product } from '@/lib/types'
@@ -18,6 +19,7 @@ export function personalisationText(product: Product | undefined, p: Record<stri
 }
 
 export default function CartView() {
+  const { format: fmt } = useCurrency()
   const { lines, hydrated, setQty, remove, clear } = useCart()
   const { bySlug, settings, ready } = useStore()
 
@@ -63,7 +65,7 @@ export default function CartView() {
                 <Link href={`/shop/${product.slug}`} className="relative aspect-[0.9] overflow-hidden bg-sand"><ProductImage src={product.images[0]} alt={product.name} sizes="120px" /></Link>
                 <div className="min-w-0">
                   <h3 className="font-serif text-xl leading-tight"><Link href={`/shop/${product.slug}`} className="hover:text-forest">{product.name}</Link></h3>
-                  <p className="mt-1 text-xs text-forest">{product.price_is_from ? 'From ' : ''}{money(product.price)} each</p>
+                  <p className="mt-1 text-xs text-forest">{product.price_is_from ? 'From ' : ''}{fmt(product.price)} each</p>
                   {extras.length > 0 && <dl className="mt-2 space-y-0.5 text-xs text-muted">{extras.map(([k, v]) => <div key={k} className="flex gap-2"><dt className="shrink-0 text-faint">{k}:</dt><dd className="break-words">{v}</dd></div>)}</dl>}
                   {line.quantity < product.min_quantity && <p className="err-text">Minimum order is {product.min_quantity}.</p>}
                   <div className="mt-4 flex items-center gap-5 sm:hidden">
@@ -72,7 +74,7 @@ export default function CartView() {
                   </div>
                 </div>
                 <div className="hidden flex-col items-end justify-between sm:flex">
-                  <p className="font-serif text-xl">{money(product.price * line.quantity)}</p>
+                  <p className="font-serif text-xl">{fmt(product.price * line.quantity)}</p>
                   <div className="flex items-center gap-5">
                     <Qty value={line.quantity} onChange={(n) => setQty(line.key, Math.min(max, Math.max(product.min_quantity, n)))} step={step} />
                     <button onClick={() => remove(line.key)} aria-label={`Remove ${product.name}`} className="text-faint"><Trash2 size={16} /></button>
@@ -89,14 +91,14 @@ export default function CartView() {
         <h2 className="font-serif text-3xl">Order summary</h2>
         {settings.free_delivery_threshold > 0 && (
           <div className="mt-5">
-            <p className="flex items-center gap-2 text-xs text-muted"><Truck size={14} className="text-forest" />{toFree > 0 ? <>Add <strong className="text-ink">{money(toFree)}</strong> for free delivery</> : 'You qualify for free delivery'}</p>
+            <p className="flex items-center gap-2 text-xs text-muted"><Truck size={14} className="text-forest" />{toFree > 0 ? <>Add <strong className="text-ink">{fmt(toFree)}</strong> for free delivery</> : 'You qualify for free delivery'}</p>
             <div className="mt-2 h-1 bg-nude"><div className="h-1 bg-gold-soft transition-all" style={{ width: `${progress}%` }} /></div>
           </div>
         )}
         <dl className="mt-6 space-y-3 border-t border-line pt-5 text-sm">
-          <div className="flex justify-between"><dt className="text-muted">Subtotal</dt><dd>{money(totals.subtotal)}</dd></div>
-          <div className="flex justify-between"><dt className="text-muted">Delivery</dt><dd>{totals.delivery_fee === 0 ? 'Free' : money(totals.delivery_fee)}</dd></div>
-          <div className="flex justify-between border-t border-line pt-4 font-serif text-2xl"><dt>Total</dt><dd>{money(totals.total)}</dd></div>
+          <div className="flex justify-between"><dt className="text-muted">Subtotal</dt><dd>{fmt(totals.subtotal)}</dd></div>
+          <div className="flex justify-between"><dt className="text-muted">Delivery</dt><dd>{totals.delivery_fee === 0 ? 'Free' : fmt(totals.delivery_fee)}</dd></div>
+          <div className="flex justify-between border-t border-line pt-4 font-serif text-2xl"><dt>Total</dt><dd>{fmt(totals.total)}</dd></div>
         </dl>
         <p className="mt-2 text-[11px] leading-5 text-faint">Delivery shown for standard delivery; collection is always free. Final amount is confirmed at checkout.</p>
         <Link href="/checkout" className={`btn-dark mt-6 w-full ${valid.length !== rows.length ? 'pointer-events-none opacity-50' : ''}`} aria-disabled={valid.length !== rows.length}>Checkout securely <ArrowRight size={15} /></Link>

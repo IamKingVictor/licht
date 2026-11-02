@@ -9,7 +9,7 @@ export const SITE = {
 
 export const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || ''
 export const SUPABASE_ANON_KEY =
-  process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||''
+  process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
 /** When Supabase env vars are missing the whole site runs in demo mode on browser storage. */
 export const HAS_SUPABASE = Boolean(SUPABASE_URL && SUPABASE_ANON_KEY)
 export const GA_ID = process.env.NEXT_PUBLIC_GA_ID || ''
@@ -35,7 +35,7 @@ export const ENQUIRY_TYPES = [
   'Other event',
 ]
 
-export const BUDGET_RANGES = ['Under £250', '£250 – £500', '£500 – £1,000', '£1,000 – £2,500', '£2,500 – £5,000', '£5,000+', 'Not sure yet']
+export const BUDGET_RANGES = ['Under $300', '$300 – $600', '$600 – $1,200', '$1,200 – $3,000', '$3,000 – $6,000', '$6,000+', 'Not sure yet']
 
 export const BOOKING_TYPES = [
   { value: 'consultation', label: 'Gifting consultation', text: 'Plan your souvenirs, packaging and personalisation with our team.' },

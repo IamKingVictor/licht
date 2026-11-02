@@ -62,6 +62,12 @@ export interface SiteSettings {
   store_name: string
   announcement: string
   currency: string
+  /** US dollar to British pound rate, e.g. 0.746 */
+  usd_to_gbp: number
+  /** US dollar to Nigerian naira rate, e.g. 1330 */
+  usd_to_ngn: number
+  /** How many naira one Espees is worth (2050) */
+  espees_ngn: number
   delivery_fee: number
   free_delivery_threshold: number
   delivery_note: string

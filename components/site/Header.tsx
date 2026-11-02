@@ -1,4 +1,6 @@
 "use client"
+import { useCurrency } from '@/lib/currency'
+import CurrencySwitcher from './CurrencySwitcher'
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 import { useEffect, useMemo, useRef, useState } from "react"
@@ -28,6 +30,7 @@ const MOBILE_LINKS = [
 ]
 
 export default function Header() {
+  const { format: fmt, formatRound: fmtRound } = useCurrency()
   const [open, setOpen] = useState(false)
   const [searching, setSearching] = useState(false)
   const [q, setQ] = useState("")
@@ -85,14 +88,16 @@ export default function Header() {
 
   return (
     <>
-      {settings.announcement && (
+      {(settings.announcement || settings.free_delivery_threshold > 0) && (
         <div className="announce px-4 py-1.5 text-center text-[10px] font-medium uppercase leading-5 tracking-[0.06em] text-cream sm:py-2 sm:text-[11px] sm:tracking-[0.12em]">
           <span className="sm:hidden">
             {settings.free_delivery_threshold > 0
-              ? `Free delivery over ${settings.currency}${settings.free_delivery_threshold}`
+              ? `Free delivery over ${fmtRound(settings.free_delivery_threshold)}`
               : settings.announcement}
           </span>
-          <span className="hidden sm:inline">{settings.announcement}</span>
+          <span className="hidden sm:inline">
+            {[settings.free_delivery_threshold > 0 ? `Free delivery over ${fmtRound(settings.free_delivery_threshold)}` : '', settings.announcement].filter(Boolean).join(' · ')}
+          </span>
         </div>
       )}
       <header className="sticky top-0 z-40 border-b border-line bg-cream/90 shadow-[0_6px_24px_-16px_rgba(31,59,50,0.3)] backdrop-blur-md">
@@ -129,6 +134,7 @@ export default function Header() {
             </Link>
           </nav>
           <div className="flex items-center gap-1 sm:gap-3">
+            <CurrencySwitcher />
             <button
               aria-label="Search"
               className="p-2"
@@ -208,7 +214,7 @@ export default function Header() {
                         <span>{p.name}</span>
                         <span className="text-xs text-forest">
                           {p.price_is_from ? "From " : ""}
-                          {money(p.price)}
+                          {fmt(p.price)}
                         </span>
                       </Link>
                     </li>

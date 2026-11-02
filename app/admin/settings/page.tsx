@@ -19,7 +19,7 @@ export default function AdminSettings() {
   if (!s) return <Loading loading={!error} error={error} />
 
   const str = (k: keyof SiteSettings) => ({ value: String(s[k] ?? ''), onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => setS({ ...s, [k]: e.target.value }) })
-  const num = (k: keyof SiteSettings) => ({ type: 'number' as const, min: 0, step: '0.01', value: Number(s[k] ?? 0), onChange: (e: React.ChangeEvent<HTMLInputElement>) => setS({ ...s, [k]: Number(e.target.value) }) })
+  const num = (k: keyof SiteSettings, step = '0.01') => ({ type: 'number' as const, min: 0, step, value: Number(s[k] ?? 0), onChange: (e: React.ChangeEvent<HTMLInputElement>) => setS({ ...s, [k]: Number(e.target.value) }) })
 
   const save = async (e: React.FormEvent) => {
     e.preventDefault(); setSaving(true)
@@ -30,13 +30,20 @@ export default function AdminSettings() {
 
   return (
     <form onSubmit={save} className="max-w-3xl space-y-8">
+      <Panel title="Currencies & exchange rates">
+        <div className="grid gap-5 p-5 sm:grid-cols-3">
+          <p className="text-xs leading-5 text-muted sm:col-span-3">Prices are stored in US dollars. Customers can view them in US dollars, British pounds or Espees using the currency menu in the header. Update these rates whenever the market moves.</p>
+          <Field label="US$ 1 = £" {...num('usd_to_gbp', '0.0001')} hint="e.g. 0.746" />
+          <Field label="US$ 1 = ₦ (naira)" {...num('usd_to_ngn', '0.01')} hint="e.g. 1330" />
+          <Field label="1 Espees = ₦ (naira)" {...num('espees_ngn', '0.01')} hint="Fixed at 2050" />
+        </div>
+      </Panel>
+
       <Panel title="Storefront">
         <div className="grid gap-5 p-5 sm:grid-cols-2">
           <TextArea label="Announcement bar" rows={2} {...str('announcement')} className="sm:col-span-2" hint="Leave blank to hide" />
-          <Field label="Currency symbol" {...str('currency')} maxLength={4} />
-          <span />
-          <Field label="Delivery fee" {...num('delivery_fee')} />
-          <Field label="Free delivery over (0 = never)" {...num('free_delivery_threshold')} />
+          <Field label="Delivery fee (US$)" {...num('delivery_fee')} />
+          <Field label="Free delivery over (US$, 0 = never)" {...num('free_delivery_threshold')} />
           <Field label="Suggest bulk quote at (items)" {...num('bulk_threshold')} />
           <TextArea label="Delivery note" rows={2} {...str('delivery_note')} className="sm:col-span-2" />
         </div>

@@ -61,7 +61,7 @@ export default function ProductEditor({ initial, categories, existingSlugs, onSa
         <Field label="Name" required value={p.name} onChange={(e) => set('name', e.target.value)} className="sm:col-span-2" />
         <Field label="URL slug" value={p.slug} onChange={(e) => set('slug', e.target.value)} placeholder={slugify(p.name) || 'auto-generated'} disabled={!isNew} hint={isNew ? 'Used in the product link' : 'Cannot be changed after creation'} />
         <Select label="Category" required value={p.category_slug} onChange={(e) => set('category_slug', e.target.value)} placeholder="Select…" options={categories.map((c) => ({ value: c.slug, label: c.name }))} />
-        <Field label="Price" required type="number" min={0} step="0.01" value={p.price} onChange={(e) => set('price', Number(e.target.value))} />
+        <Field label="Price (US$)" required type="number" min={0} step="0.01" value={p.price} onChange={(e) => set('price', Number(e.target.value))} />
         <Field label="Lead time (working days)" type="number" min={0} value={p.lead_time_days} onChange={(e) => set('lead_time_days', Number(e.target.value))} />
         <Field label="Minimum order quantity" type="number" min={1} value={p.min_quantity} onChange={(e) => set('min_quantity', Number(e.target.value))} />
         <div>

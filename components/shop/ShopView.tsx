@@ -1,4 +1,5 @@
 'use client'
+import { useCurrency } from '@/lib/currency'
 import Link from 'next/link'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useMemo, useState } from 'react'
@@ -15,13 +16,16 @@ const SORTS = [
   { value: 'price-desc', label: 'Price: high to low' },
   { value: 'name', label: 'Name A–Z' },
 ]
-const PRICES = [
-  { value: '', label: 'Any price' }, { value: '0-25', label: 'Under £25' }, { value: '25-50', label: '£25 – £50' },
-  { value: '50-100', label: '£50 – £100' }, { value: '100-', label: '£100 +' },
-]
+// Ranges are in US dollars (the stored currency); labels are shown in the visitor's currency
+const PRICE_RANGES = [[0, 10], [10, 25], [25, 50], [50, 100], [100, 0]] as const
 
 export default function ShopView({ fixedCategory, hideFilters = false }: { fixedCategory?: string; hideFilters?: boolean }) {
   const { products, categories, ready, error, reload } = useStore()
+  const { formatRound } = useCurrency()
+  const PRICES = [
+    { value: '', label: 'Any price' },
+    ...PRICE_RANGES.map(([a, b]) => ({ value: `${a}-${b || ''}`, label: !a ? `Under ${formatRound(b)}` : !b ? `${formatRound(a)} +` : `${formatRound(a)} – ${formatRound(b)}` })),
+  ]
   const sp = useSearchParams()
   const router = useRouter()
   const pathname = usePathname()

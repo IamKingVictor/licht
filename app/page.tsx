@@ -4,7 +4,7 @@ import { SITE } from '@/lib/config'
 export default function HomePage() {
   const ld = {
     '@context': 'https://schema.org', '@type': 'Store', name: SITE.name, description: SITE.description, url: SITE.url,
-    image: `${SITE.url}/images/products/led-vanity-mirror.jpg`, slogan: SITE.tagline,
+    image: `${SITE.url}/icons/icon-512.png`, slogan: SITE.tagline,
   }
   return (
     <>

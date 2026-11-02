@@ -1,4 +1,5 @@
 'use client'
+import { useCurrency } from '@/lib/currency'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useEffect, useMemo, useState } from 'react'
@@ -8,7 +9,7 @@ import { useStore } from '@/lib/store'
 import { useAuth } from '@/lib/auth'
 import { api } from '@/lib/db'
 import { computeTotals } from '@/lib/pricing'
-import { isEmail, isPhone, money, todayISO } from '@/lib/format'
+import { isEmail, isPhone, todayISO } from '@/lib/format'
 import type { DeliveryMethod, PaymentMethod, Product } from '@/lib/types'
 import { Alert, Field, Spinner, TextArea } from '@/components/ui/fields'
 import { EmptyState, Skeleton } from '@/components/ui/bits'
@@ -19,6 +20,7 @@ type Form = { customer_name: string; email: string; phone: string; address_line1
 const empty: Form = { customer_name: '', email: '', phone: '', address_line1: '', address_line2: '', city: '', postcode: '', country: 'United Kingdom', event_date: '', customer_notes: '' }
 
 export default function CheckoutView() {
+  const { format: fmt, formatBase: fmtBase, code } = useCurrency()
   const router = useRouter()
   const { lines, hydrated, clear } = useCart()
   const { bySlug, settings, ready } = useStore()
@@ -164,16 +166,17 @@ export default function CheckoutView() {
                 <p className="text-xs text-muted">Qty {line.quantity}</p>
                 {personalisationText(product, line.personalisation).map(([k, v]) => <p key={k} className="truncate text-[11px] text-faint">{k}: {v}</p>)}
               </div>
-              <p className="text-sm">{money(product.price * line.quantity)}</p>
+              <p className="text-sm">{fmt(product.price * line.quantity)}</p>
             </li>
           ))}
         </ul>
         <dl className="mt-4 space-y-3 border-t border-line pt-5 text-sm">
-          <div className="flex justify-between"><dt className="text-muted">Subtotal</dt><dd>{money(totals.subtotal)}</dd></div>
-          <div className="flex justify-between"><dt className="text-muted">{method === 'collection' ? 'Collection' : 'Delivery'}</dt><dd>{totals.delivery_fee === 0 ? 'Free' : money(totals.delivery_fee)}</dd></div>
-          <div className="flex justify-between border-t border-line pt-4 font-serif text-2xl"><dt>Total</dt><dd>{money(totals.total)}</dd></div>
+          <div className="flex justify-between"><dt className="text-muted">Subtotal</dt><dd>{fmt(totals.subtotal)}</dd></div>
+          <div className="flex justify-between"><dt className="text-muted">{method === 'collection' ? 'Collection' : 'Delivery'}</dt><dd>{totals.delivery_fee === 0 ? 'Free' : fmt(totals.delivery_fee)}</dd></div>
+          <div className="flex justify-between border-t border-line pt-4 font-serif text-2xl"><dt>Total</dt><dd>{fmt(totals.total)}</dd></div>
+          {code !== 'USD' && <p className="text-right text-[11px] text-muted">Your order is charged as {fmtBase(totals.total)} USD. Other currencies are shown at today&apos;s rate.</p>}
         </dl>
-        <button disabled={submitting} className="btn-dark mt-6 w-full">{submitting ? <><Spinner /> Placing order…</> : <><Lock size={14} /> Place order · {money(totals.total)}</>}</button>
+        <button disabled={submitting} className="btn-dark mt-6 w-full">{submitting ? <><Spinner /> Placing order…</> : <><Lock size={14} /> Place order · {fmt(totals.total)}</>}</button>
         <p className="mt-3 flex items-center justify-center gap-2 text-[11px] text-faint"><ArrowRight size={12} /> You will not be charged until payment is confirmed.</p>
         <Link href="/cart" className="mt-4 block text-center text-[10px] uppercase tracking-[0.16em] text-muted hover:text-forest">Back to basket</Link>
       </aside>

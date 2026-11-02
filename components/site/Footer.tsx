@@ -7,7 +7,7 @@ import { digits, whatsappLink } from '@/lib/format'
 import Logo from './Logo'
 
 const cols = [
-  { title: 'Shop', links: [['All products', '/shop'], ['Wedding souvenirs', '/shop?category=wedding-souvenirs'], ['Personalised gifts', '/personalised-gifts'], ['Gift boxes', '/gift-boxes'], ['Corporate gifts', '/corporate-gifts'], ['New arrivals', '/shop?sort=newest'], ['Bestsellers', '/shop?filter=bestsellers']] },
+  { title: 'Shop', links: [['All products', '/shop'], ['Home appliances', '/shop?category=home-appliances'], ['Phone & tech accessories', '/shop?category=tech-accessories'], ['Gifts & lifestyle', '/shop?category=gifts-lifestyle'], ['Corporate gifts', '/corporate-gifts'], ['New arrivals', '/shop?sort=newest'], ['Bestsellers', '/shop?filter=bestsellers']] },
   { title: 'Information', links: [['About us', '/about'], ['Contact us', '/contact'], ['FAQs', '/faq'], ['Track order', '/track-order'], ['Delivery information', '/policies/delivery'], ['Returns & refunds', '/policies/returns'], ['Terms & conditions', '/policies/terms'], ['Privacy policy', '/policies/privacy']] },
   { title: 'Business', links: [['Corporate gifting', '/corporate-gifts'], ['Bulk orders', '/quote?type=bulk'], ['Custom orders', '/quote?type=custom'], ['Event orders', '/events'], ['Book a consultation', '/quote?tab=booking']] },
 ]

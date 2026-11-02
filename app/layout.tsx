@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   formatDetection: { telephone: false },
   openGraph: {
     type: 'website', siteName: SITE.name, title: SITE.name, description: SITE.description,
-    images: [{ url: '/images/products/led-vanity-mirror.jpg', width: 516, height: 594, alt: 'Backlit LED vanity mirror' }],
+    images: [{ url: '/icons/icon-512.png', width: 512, height: 512, alt: 'LICHT SIGNATURE SOUVENIRS logo' }],
   },
   twitter: { card: 'summary_large_image', title: SITE.name, description: SITE.description },
 }

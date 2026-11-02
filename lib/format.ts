@@ -1,10 +1,7 @@
-let currency = '£'
-export function setCurrency(c: string) {
-  currency = c || '£'
-}
+/** Admin and stored amounts are always US dollars (the base currency). Customer pages use useCurrency() instead. */
 export function money(n: number | null | undefined) {
   const v = Number(n ?? 0)
-  return `${currency}${v.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+  return `$${v.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
 }
 export function formatDate(iso?: string | null) {
   if (!iso) return '—'
