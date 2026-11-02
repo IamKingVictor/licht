@@ -3,11 +3,17 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowRight, Camera, Sparkles } from 'lucide-react'
 import { useStore } from '@/lib/store'
-import { OCCASIONS, STEPS, USPS } from '@/lib/content'
+import { STEPS, USPS } from '@/lib/content'
 import ProductCard from '@/components/shop/ProductCard'
 import { SectionHead, Skeleton } from '@/components/ui/bits'
 import Testimonials from './Testimonials'
 import HeroCarousel from './HeroCarousel'
+
+const CATEGORY_IMAGES: Record<string, string> = {
+  'home-appliances': '/images/categories/portable-steam-iron.jpg',
+  'tech-accessories': '/images/categories/phone-holder.webp',
+  'gifts-lifestyle': '/images/categories/diamond-flask.webp',
+}
 
 export default function HomeView() {
   const { categories, products, ready, settings } = useStore()
@@ -26,10 +32,12 @@ export default function HomeView() {
           <SectionHead eyebrow="Find your perfect piece" title="Gifts made for" em="every occasion" action={{ href: '/shop', label: 'View all' }} />
           <div className="no-scrollbar -mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-2 sm:mx-0 sm:grid sm:snap-none sm:grid-cols-2 sm:gap-5 sm:overflow-visible sm:px-0 md:grid-cols-6">
             {!ready && [0, 1, 2].map((i) => <Skeleton key={i} className="aspect-[1.05] w-[72vw] shrink-0 sm:w-auto md:col-span-2" />)}
-            {cols.map((c, i) => (
+            {cols.map((c, i) => {
+              const image = CATEGORY_IMAGES[c.slug] ?? c.image_url
+              return (
               <Link href={c.slug === 'personalised-gifts' ? '/personalised-gifts' : c.slug === 'corporate-gifts' ? '/corporate-gifts' : c.slug === 'gift-boxes' ? '/gift-boxes' : `/shop?category=${c.slug}`} key={c.id} className={`group w-[68vw] shrink-0 snap-start sm:w-auto ${i < 3 ? 'md:col-span-2' : 'md:col-span-3'}`}>
-                <div className={`relative overflow-hidden ${c.image_url ? 'bg-nude' : 'bg-forest'} ${i < 3 ? 'aspect-[1.05]' : 'aspect-[1.6]'}`}>
-                  {c.image_url && <Image src={c.image_url} alt={c.name} fill className="object-cover transition-transform duration-700 group-hover:scale-105" sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw" />}
+                <div className={`relative overflow-hidden ${image ? 'bg-nude' : 'bg-forest'} ${i < 3 ? 'aspect-[1.05]' : 'aspect-[1.6]'}`}>
+                  {image && <Image src={image} alt={c.name} fill className="object-cover transition-transform duration-700 group-hover:scale-105" sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw" />}
                   <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#17120f]/70 to-transparent p-5 pt-20 text-white"><p className="font-serif text-2xl">{c.name}</p></div>
                 </div>
                 <div className="flex items-center justify-between gap-3 border-b border-[#cfc4b5] py-4">
@@ -37,7 +45,8 @@ export default function HomeView() {
                   <span className="shrink-0 text-forest"><ArrowRight size={18} /></span>
                 </div>
               </Link>
-            ))}
+              )
+            })}
           </div>
         </div>
       </section>
@@ -67,6 +76,7 @@ export default function HomeView() {
         </div>
       </section>
 
+      {/* Temporarily hidden while the Events & occasions section is being reworked.
       <section className="mx-auto max-w-[1360px] px-5 py-8 sm:py-20 lg:px-10">
         <SectionHead eyebrow="Events & occasions" title="Celebrations deserve" em="a signature touch" action={{ href: '/events', label: 'All occasions' }} />
         <ul className="no-scrollbar -mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-2 sm:mx-0 sm:grid sm:snap-none sm:grid-cols-2 sm:gap-5 sm:overflow-visible sm:px-0 lg:grid-cols-4">
@@ -86,6 +96,7 @@ export default function HomeView() {
           ))}
         </ul>
       </section>
+      */}
 
       <section className="border-y border-line bg-sand px-5 py-8 sm:py-20 lg:px-10">
         <div className="mx-auto max-w-[1360px]">
